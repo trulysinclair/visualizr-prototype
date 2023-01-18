@@ -2237,26 +2237,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jj-calc@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "jj-calc@workspace:."
-  dependencies:
-    "@next/font": 13.1.2
-    "@types/node": 18.11.18
-    "@types/react": 18.0.26
-    "@types/react-dom": 18.0.10
-    autoprefixer: ^10.4.13
-    eslint: 8.31.0
-    eslint-config-next: 13.1.2
-    next: 13.1.2
-    postcss: ^8.4.21
-    react: 18.2.0
-    react-dom: 18.2.0
-    tailwindcss: ^3.2.4
-    typescript: 4.9.4
-  languageName: unknown
-  linkType: soft
-
 "js-sdsl@npm:^4.1.4":
   version: 4.2.0
   resolution: "js-sdsl@npm:4.2.0"
@@ -2583,6 +2563,26 @@ __metadata:
   checksum: b8ffeb1e262eff7968fc90a2b6767b04cfd9842582a9d0ece0af7049537266e7b2506dfb1d107a32f06dd849ab2aea834d5830f7f4d0e5cb7d36e1ae55d021d9
   languageName: node
   linkType: hard
+
+"next-tailwind-yarn-starter@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "next-tailwind-yarn-starter@workspace:."
+  dependencies:
+    "@next/font": 13.1.2
+    "@types/node": 18.11.18
+    "@types/react": 18.0.26
+    "@types/react-dom": 18.0.10
+    autoprefixer: ^10.4.13
+    eslint: 8.31.0
+    eslint-config-next: 13.1.2
+    next: 13.1.2
+    postcss: ^8.4.21
+    react: 18.2.0
+    react-dom: 18.2.0
+    tailwindcss: ^3.2.4
+    typescript: 4.9.4
+  languageName: unknown
+  linkType: soft
 
 "next@npm:13.1.2":
   version: 13.1.2
