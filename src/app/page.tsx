@@ -1,5 +1,7 @@
 "use client";
-import { Inter } from "@next/font/google";
+import { SurfaceAppbar } from "@/components/ui/surface-appbar";
+import Table from "components/table";
+import { Toolbar } from "@/components/ui/toolbar";
 import { DragEvent, useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
   addEdge,
@@ -17,27 +19,8 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
 } from "reactflow";
-import { SurfaceAppbar } from "./SurfaceAppbar";
-import Table from "./table";
-import { Toolbar } from "./Toolbar";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const initialNodes: Node[] = [
-  {
-    id: "dndnode_0",
-    type: "input",
-    data: {
-      label: "input node",
-      description: "description",
-      columns: [
-        { name: "id", type: "int" },
-        { name: "name", type: "string" },
-        { name: "email", type: "string" },
-      ],
-    },
-    position: { x: 250, y: 5 },
-  },
   {
     id: "dndnode_1",
     type: "custom",
@@ -192,7 +175,7 @@ export default function Home() {
               className="z-20 rounded bg-white"
             />
             <MiniMap position="bottom-left" className="z-20" />
-            <Toolbar/>
+            <Toolbar />
             <Panel
               position="top-right"
               className="!inset-y-0 !right-0 flex items-center"

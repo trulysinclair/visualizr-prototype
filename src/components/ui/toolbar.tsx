@@ -1,7 +1,7 @@
 "use client";
 import { Squares2X2Icon, TableCellsIcon } from "@heroicons/react/24/outline";
 import { Panel } from "reactflow";
-import { DropTool } from "./DropTool";
+import { DropTool } from "../drop-tool";
 
 export const Toolbar = () => (
   <Panel position="top-left" className="!inset-y-0 !left-0 flex items-center">
