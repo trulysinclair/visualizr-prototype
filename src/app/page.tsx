@@ -1,5 +1,4 @@
 "use client";
-import { Squares2X2Icon, TableCellsIcon } from "@heroicons/react/24/outline";
 import { Inter } from "@next/font/google";
 import { DragEvent, useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
@@ -20,6 +19,7 @@ import ReactFlow, {
 } from "reactflow";
 import { SurfaceAppbar } from "./SurfaceAppbar";
 import Table from "./table";
+import { Toolbar } from "./Toolbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,11 +41,15 @@ const initialNodes: Node[] = [
   {
     id: "dndnode_1",
     type: "custom",
-    data: { label: "custom node", description: "description",columns: [
-      { name: "id", type: "int" },
-      { name: "name", type: "string" },
-      { name: "email", type: "string" },
-    ], },
+    data: {
+      label: "custom node",
+      description: "description",
+      columns: [
+        { name: "id", type: "int" },
+        { name: "name", type: "string" },
+        { name: "email", type: "string" },
+      ],
+    },
     position: { x: 100, y: 100 },
   },
 ];
@@ -160,21 +164,18 @@ export default function Home() {
     document.addEventListener("keyup", onKeyUp);
   }, [reactflowInstance]);
 
-  const onDragStart = (event: DragEvent<HTMLDivElement>, nodeType: string) => {
-    event.dataTransfer.setData("application/reactflow", nodeType);
-    event.dataTransfer.effectAllowed = "move";
-  };
-
   return (
     <main className="h-screen w-full bg-black">
       <ReactFlowProvider>
-        <div className="relative h-full w-full rounded-2xl bg-white" ref={reactFlowWrapper}>
+        <div
+          className="relative h-full w-full rounded-2xl bg-white"
+          ref={reactFlowWrapper}
+        >
           <SurfaceAppbar />
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            
-            deleteKeyCode={'Delete'}
+            deleteKeyCode={"Delete"}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             nodeTypes={nodeTypes}
@@ -186,29 +187,12 @@ export default function Home() {
             onDragOver={onDragOver}
             fitView
           >
-            <Controls position="bottom-right" className="z-20 rounded bg-white" />
+            <Controls
+              position="bottom-right"
+              className="z-20 rounded bg-white"
+            />
             <MiniMap position="bottom-left" className="z-20" />
-            <Panel
-              position="top-left"
-              className="!inset-y-0 !left-0 flex items-center"
-            >
-              <div className="space-y-2 rounded-2xl border bg-gray-100 p-4 text-black shadow-md">
-                <div
-                  className="flex h-10 w-10 items-center justify-center rounded bg-white p-2 shadow"
-                  onDragStart={(event) => onDragStart(event, "default")}
-                  draggable
-                >
-                  <TableCellsIcon className="h-6 w-6" />
-                </div>
-                <div
-                  className="flex h-10 w-10 items-center justify-center rounded bg-white p-2 shadow"
-                  onDragStart={(event) => onDragStart(event, "custom")}
-                  draggable
-                >
-                  <Squares2X2Icon className="h-6 w-6" />
-                </div>
-              </div>
-            </Panel>
+            <Toolbar/>
             <Panel
               position="top-right"
               className="!inset-y-0 !right-0 flex items-center"
