@@ -1,4 +1,5 @@
 import './globals.css'
+import 'reactflow/dist/style.css';
 
 export default function RootLayout({
   children,
