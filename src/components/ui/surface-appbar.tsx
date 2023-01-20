@@ -14,7 +14,9 @@ export function SurfaceAppbar() {
         priority
       />
       {/* The main area */}
-      <div className="rounded-b-2xl bg-black p-4 text-white">Appbar</div>
+      <div className="rounded-b-2xl bg-black p-4 text-white">
+        Experimental Appbar
+      </div>
       {/* Rounded cutout */}
       <Image
         src="/corner.svg"
