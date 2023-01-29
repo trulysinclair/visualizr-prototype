@@ -1,12 +1,30 @@
+import { PSQLDataTypes } from "@/types/postgresql";
 import { Node } from "reactflow";
+
+export interface IColumn {
+  name: string;
+  isPrimaryKey: boolean;
+  isNullable: boolean;
+  isUnique: boolean;
+  type: PSQLDataTypes;
+  length?: number;
+  defaultValue: string;
+  description: string;
+  isAutoIncrement: boolean;
+  isArray?: boolean;
+  foreignKey: {
+    table: string;
+    column: string;
+  } | null;
+}
 
 /**
  * The data which is stored in a table node.
  */
-export interface ITableData {
+export interface ITable {
   title: string;
   description: string;
-  columns: { name: string; type: string }[];
+  columns: IColumn[];
 }
 
 /**
@@ -15,4 +33,4 @@ export interface ITableData {
  * A table node has a title, a description, and a list of columns.
  * @see https://reactflow.dev/docs/api/node/
  */
-export type TableNode = Node<ITableData>;
+export type TableNode = Node<ITable>;
