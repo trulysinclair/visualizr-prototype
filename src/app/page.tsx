@@ -1,25 +1,17 @@
 "use client";
-import { SurfaceAppbar } from "@/components/ui/surface-appbar";
 import Table from "@/components/table/table";
+import CustomEdge from "@/components/ui/custom-edge";
+import { MarkerDefinition } from "@/components/ui/marker";
+import { SurfaceAppbar } from "@/components/ui/surface-appbar";
 import { Toolbar } from "@/components/ui/toolbar";
-import {
-  DragEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   addEdge,
   Background,
   Connection,
   Controls,
   Edge,
-  MarkerType,
   MiniMap,
-  Node,
-  NodeTypes,
   Panel,
   ReactFlowInstance,
   ReactFlowProvider,
@@ -27,10 +19,8 @@ import ReactFlow, {
   useNodesState,
 } from "reactflow";
 import { v4 } from "uuid";
+import { PSQLCharacterType, PSQLNumericType } from "../types/postgresql";
 import { TableNode } from "../types/table-node";
-import fav from "~/public/favicon.ico";
-import { MarkerDefinition } from "@/components/ui/marker";
-import CustomEdge from "@/components/ui/custom-edge";
 
 const node1 = v4();
 const node2 = v4();
@@ -40,12 +30,42 @@ const initialNodes: TableNode[] = [
     id: node1,
     type: "custom",
     data: {
-      title: "New Table",
+      title: "User",
       description: "description",
       columns: [
-        { name: "id", type: "int" },
-        { name: "name", type: "string" },
-        { name: "email", type: "string" },
+        {
+          name: "id",
+          type: PSQLNumericType.SERIAL,
+          isPrimaryKey: true,
+          isUnique: true,
+          isNullable: true,
+          isAutoIncrement: true,
+          foreignKey: { table: node2, column: "int" },
+          defaultValue: "",
+          description: "",
+        },
+        {
+          name: "name",
+          type: PSQLCharacterType.TEXT,
+          isPrimaryKey: false,
+          isUnique: false,
+          isNullable: false,
+          isAutoIncrement: true,
+          foreignKey: null,
+          defaultValue: "",
+          description: "",
+        },
+        {
+          name: "email",
+          type: PSQLCharacterType.TEXT,
+          isPrimaryKey: false,
+          isUnique: false,
+          isNullable: false,
+          isAutoIncrement: true,
+          foreignKey: null,
+          defaultValue: "",
+          description: "",
+        },
       ],
     },
     position: { x: 0, y: 100 },
@@ -54,12 +74,45 @@ const initialNodes: TableNode[] = [
     id: node2,
     type: "custom",
     data: {
-      title: "New Table",
+      title: "Order",
       description: "description",
       columns: [
-        { name: "id", type: "int" },
-        { name: "name", type: "string" },
-        { name: "email", type: "string" },
+        {
+          name: "id",
+          type: PSQLNumericType.SERIAL,
+          isPrimaryKey: true,
+          isUnique: false,
+          isNullable: false,
+          isAutoIncrement: true,
+          foreignKey: { table: "", column: "" },
+          length: 0,
+          defaultValue: "",
+          description: "",
+        },
+        {
+          name: "name",
+          type: PSQLCharacterType.TEXT,
+          isPrimaryKey: false,
+          isUnique: false,
+          isNullable: false,
+          isAutoIncrement: true,
+          foreignKey: null,
+          length: 0,
+          defaultValue: "",
+          description: "",
+        },
+        {
+          name: "email",
+          type: PSQLCharacterType.TEXT,
+          isPrimaryKey: false,
+          isUnique: false,
+          isNullable: false,
+          isAutoIncrement: true,
+          foreignKey: null,
+          length: 0,
+          defaultValue: "",
+          description: "",
+        },
       ],
     },
     position: { x: 300, y: 100 },
@@ -89,7 +142,7 @@ export default function Home() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
 
-  const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
+  // const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
   const [reactflowInstance, setReactflowInstance] =
     useState<ReactFlowInstance | null>(null);
   /** When the user holds `Shift`, we enable snapping. */
@@ -104,7 +157,7 @@ export default function Home() {
   );
 
   /**
-   * When the graph is updated, update the nodes and edges.
+   * Define the Node types.
    */
   const nodeTypes = useMemo(
     () => ({
@@ -136,30 +189,30 @@ export default function Home() {
   );
 
   // TODO: Currently broken, fix later.
-  useEffect(() => {
-    const image = new Image(20);
-    image.src = fav.src;
+  // useEffect(() => {
+  // const image = new Image(20);
+  // image.src = fav.src;
 
-    image.onload = () => {
-      console.log("loaded");
-      setDragImage(image);
-    };
+  // image.onload = () => {
+  //   console.log("loaded");
+  //   setDragImage(image);
+  // };
 
-    // setDragImage(image);
-  }, [setDragImage]);
+  // setDragImage(image);
+  // }, [setDragImage]);
 
   /**
    * When a node is dragged, update the graph.
    */
-  const onDragOver = useCallback(
-    (event: DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
+  // const onDragOver = useCallback(
+  //   (event: DragEvent<HTMLDivElement>) => {
+  //     event.preventDefault();
 
-      event.dataTransfer.dropEffect = "move";
-      event.dataTransfer.setDragImage(dragImage, 0, 0);
-    },
-    [dragImage]
-  );
+  //     event.dataTransfer.dropEffect = "move";
+  //     event.dataTransfer.setDragImage(dragImage, 0, 0);
+  //   },
+  //   [dragImage]
+  // );
 
   /**
    * When a node is dropped, add it to the graph.
@@ -196,9 +249,45 @@ export default function Home() {
           title: `New Table`,
           description: "description",
           columns: [
-            { name: "id", type: "int" },
-            { name: "name", type: "string" },
-            { name: "email", type: "string" },
+            {
+              name: "id",
+              type: PSQLNumericType.SERIAL,
+              isPrimaryKey: true,
+
+              isUnique: false,
+              isNullable: false,
+              isAutoIncrement: true,
+              foreignKey: { table: "", column: "" },
+              length: 0,
+              defaultValue: "",
+              description: "",
+            },
+            {
+              name: "name",
+              type: PSQLCharacterType.TEXT,
+              isPrimaryKey: true,
+
+              isUnique: false,
+              isNullable: false,
+              isAutoIncrement: true,
+              foreignKey: null,
+              length: 0,
+              defaultValue: "",
+              description: "",
+            },
+            {
+              name: "id",
+              type: PSQLCharacterType.TEXT,
+              isPrimaryKey: true,
+
+              isUnique: false,
+              isNullable: false,
+              isAutoIncrement: true,
+              foreignKey: null,
+              length: 0,
+              defaultValue: "",
+              description: "",
+            },
           ],
         },
       };
@@ -265,7 +354,7 @@ export default function Home() {
             onDrop={onDrop}
             snapGrid={[10, 10]}
             snapToGrid={snapToGrid}
-            onDragOver={onDragOver}
+            // onDragOver={onDragOver}
             fitView
           >
             <Controls

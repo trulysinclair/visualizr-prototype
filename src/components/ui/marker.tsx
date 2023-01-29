@@ -39,6 +39,7 @@ interface MarkerDefinitionsProps {
     | "end-zero-or-many"
     | "start-one-or-many"
     | "end-one-or-many";
+    
 }
 
 export function MarkerDefinition({ color, id }: MarkerDefinitionsProps) {
@@ -78,45 +79,6 @@ export function MarkerDefinition({ color, id }: MarkerDefinitionsProps) {
           </>
         );
       case "start-zero-or-many":
-        return (
-          <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
-          </>
-        );
-      case "end-many":
-        return (
-          <>
-            <line x1={0} y1={10} x2={20} y2={0} stroke={color} />
-            <line x1={0} y1={10} x2={20} y2={10} stroke={color} />
-            <line x1={0} y1={10} x2={20} y2={20} stroke={color} />
-          </>
-        );
-      case "end-one":
-        return (
-          <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
-            <line x1={0} y1={10} x2={20} y2={10} stroke={color} />
-          </>
-        );
-      case "end-one-only":
-        return (
-          <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
-          </>
-        );
-      case "end-zero-or-one":
-        return (
-          <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
-          </>
-        );
-      case "end-one-or-many":
-        return (
-          <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
-          </>
-        );
-      case "end-zero-or-many":
         return (
           <>
             <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
