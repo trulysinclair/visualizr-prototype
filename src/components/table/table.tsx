@@ -1,6 +1,7 @@
 import { ITable } from "@/types/table";
 import { memo } from "react";
 import { Node, NodeProps } from "reactflow";
+import { v4 } from "uuid";
 import TableColumn from "./table-column";
 
 /**
@@ -18,7 +19,7 @@ const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
 
       {data.columns.map((column) => (
         <TableColumn
-          key={column.name}
+          key={v4()}
           type={column.type}
           defaultValue={column.defaultValue}
           description={column.description}

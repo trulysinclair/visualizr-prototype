@@ -1,4 +1,5 @@
 "use client";
+
 import Table from "@/components/table/table";
 import CustomEdge from "@/components/ui/custom-edge";
 import { MarkerDefinition } from "@/components/ui/marker";
@@ -21,7 +22,7 @@ import ReactFlow, {
 } from "reactflow";
 import { v4 } from "uuid";
 import { PSQLCharacterType, PSQLNumericType } from "../types/postgresql";
-import { TableNode } from "../types/table-node";
+import { TableNode } from "../types/table";
 
 const node1 = v4();
 const node2 = v4();
@@ -29,7 +30,7 @@ const node2 = v4();
 const initialNodes: TableNode[] = [
   {
     id: node1,
-    type: "custom",
+    type: "table",
     data: {
       title: "User",
       description: "description",
@@ -73,7 +74,7 @@ const initialNodes: TableNode[] = [
   },
   {
     id: node2,
-    type: "custom",
+    type: "table",
     data: {
       title: "Order",
       description: "description",
@@ -162,7 +163,7 @@ export default function Home() {
    */
   const nodeTypes = useMemo(
     () => ({
-      custom: Table,
+      table: Table,
     }),
     []
   );
@@ -189,6 +190,7 @@ export default function Home() {
     [setEdges]
   );
 
+  //#region broken drag image
   // TODO: Currently broken, fix later.
   // useEffect(() => {
   // const image = new Image(20);
@@ -214,6 +216,7 @@ export default function Home() {
   //   },
   //   [dragImage]
   // );
+  //#endregion
   const onDragOver = useCallback(
     (event: DragEvent<HTMLDivElement>) => {
       event.preventDefault();
