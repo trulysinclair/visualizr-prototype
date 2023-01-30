@@ -123,20 +123,7 @@ const initialNodes: TableNode[] = [
 
 const strokeColor = "stroke-accent-orange";
 
-const initialEdges: Edge[] = [
-  {
-    id: v4(),
-    source: node1,
-    target: node2,
-    data: {
-      text: "test",
-    },
-    type: "custom",
-    markerStart: "start-one",
-    markerEnd: "end-many",
-    label: "1 to many",
-  },
-];
+const initialEdges: Edge[] = [];
 
 export default function Home() {
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
