@@ -11,8 +11,8 @@ import TableColumn from "./table-column";
  */
 const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
   return (
-    <div className="w-40 h-40 rounded shadow bg-white focus-visible:outline-none pb-2">
-      <div className="rounded-t bg-blue-500 px-2 text-sm font-medium text-white">
+    <div className="group rounded-lg border border-gray-800 bg-secondary shadow duration-200 hover:border-accent-orange focus-visible:outline-none">
+      <div className="rounded-t-lg bg-primary p-2 text-center text-sm  font-normal text-white">
         {data.title}
       </div>
 
@@ -32,7 +32,7 @@ const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
           isConnectable={isConnectable}
         />
       ))}
-
+      <div className="h-2 w-full rounded-b-lg bg-primary" />
     </div>
   );
 };

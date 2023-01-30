@@ -4,10 +4,11 @@ import CustomEdge from "@/components/ui/custom-edge";
 import { MarkerDefinition } from "@/components/ui/marker";
 import { SurfaceAppbar } from "@/components/ui/surface-appbar";
 import { Toolbar } from "@/components/ui/toolbar";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, DragEvent } from "react";
 import ReactFlow, {
   addEdge,
   Background,
+  BackgroundVariant,
   Connection,
   Controls,
   Edge,
@@ -38,18 +39,18 @@ const initialNodes: TableNode[] = [
           type: PSQLNumericType.SERIAL,
           isPrimaryKey: true,
           isUnique: true,
-          isNullable: true,
+          isNullable: false,
           isAutoIncrement: true,
           foreignKey: { table: node2, column: "int" },
           defaultValue: "",
           description: "",
         },
         {
-          name: "name",
+          name: "first_name",
           type: PSQLCharacterType.TEXT,
           isPrimaryKey: false,
           isUnique: false,
-          isNullable: false,
+          isNullable: true,
           isAutoIncrement: true,
           foreignKey: null,
           defaultValue: "",
@@ -60,7 +61,7 @@ const initialNodes: TableNode[] = [
           type: PSQLCharacterType.TEXT,
           isPrimaryKey: false,
           isUnique: false,
-          isNullable: false,
+          isNullable: true,
           isAutoIncrement: true,
           foreignKey: null,
           defaultValue: "",
@@ -94,8 +95,8 @@ const initialNodes: TableNode[] = [
           type: PSQLCharacterType.TEXT,
           isPrimaryKey: false,
           isUnique: false,
-          isNullable: false,
-          isAutoIncrement: true,
+          isNullable: true,
+          isAutoIncrement: false,
           foreignKey: null,
           length: 0,
           defaultValue: "",
@@ -106,8 +107,8 @@ const initialNodes: TableNode[] = [
           type: PSQLCharacterType.TEXT,
           isPrimaryKey: false,
           isUnique: false,
-          isNullable: false,
-          isAutoIncrement: true,
+          isNullable: true,
+          isAutoIncrement: false,
           foreignKey: null,
           length: 0,
           defaultValue: "",
@@ -119,7 +120,7 @@ const initialNodes: TableNode[] = [
   },
 ];
 
-const strokeColor = "#b1b1b7";
+const strokeColor = "stroke-accent-orange";
 
 const initialEdges: Edge[] = [
   {
@@ -213,6 +214,14 @@ export default function Home() {
   //   },
   //   [dragImage]
   // );
+  const onDragOver = useCallback(
+    (event: DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+
+      event.dataTransfer.dropEffect = "move";
+    },
+    []
+  );
 
   /**
    * When a node is dropped, add it to the graph.
@@ -279,7 +288,6 @@ export default function Home() {
               name: "id",
               type: PSQLCharacterType.TEXT,
               isPrimaryKey: true,
-
               isUnique: false,
               isNullable: false,
               isAutoIncrement: true,
@@ -337,7 +345,7 @@ export default function Home() {
     <main className="h-screen w-full bg-black">
       <ReactFlowProvider>
         <div
-          className="relative h-full w-full rounded-2xl bg-white"
+          className="relative h-full w-full rounded-3xl bg-white overflow-hidden"
           ref={reactFlowWrapper}
         >
           <SurfaceAppbar />
@@ -354,12 +362,12 @@ export default function Home() {
             onDrop={onDrop}
             snapGrid={[10, 10]}
             snapToGrid={snapToGrid}
-            // onDragOver={onDragOver}
+            onDragOver={onDragOver}
             fitView
           >
             <Controls
               position="bottom-right"
-              className="z-20 rounded bg-white"
+              className="z-20 rounded bg-input-background border-b-secondary overflow-hidden"
             />
             <MarkerDefinition id="start-one" color={strokeColor} />
             <MarkerDefinition id="start-many" color={strokeColor} />
@@ -377,11 +385,11 @@ export default function Home() {
               position="top-right"
               className="!inset-y-0 !right-0 flex items-center"
             >
-              <div className="space-y-2 rounded-2xl border bg-gray-100 p-4 text-black shadow-md">
+              <div className="space-y-2 rounded-2xl bg-primary p-4 text-white shadow-md">
                 Sidebar
               </div>
             </Panel>
-            <Background />
+            <Background color="#374151" className="bg-gray-800 fill-white" variant={BackgroundVariant.Lines} />
           </ReactFlow>
         </div>
       </ReactFlowProvider>

@@ -28,12 +28,12 @@ export default function CustomEdge({
       <path
         id={id}
         style={style}
-        className="react-flow__edge-path"
+        className="react-flow__edge-path stroke-accent-orange"
         d={edgePath}
         markerStart={markerStart}
         markerEnd={markerEnd}
       />
-      <text>
+      {/* <text>
         <textPath
           href={`#${id}`}
           style={{ fontSize: 12 }}
@@ -42,7 +42,7 @@ export default function CustomEdge({
         >
           {data!.text}
         </textPath>
-      </text>
+      </text> */}
     </>
   );
 }

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { ReactNode } from "react";
 import { render } from "react-dom";
 
@@ -13,8 +14,8 @@ const Marker = ({ id, className, children }: MarkerProps) => (
     id={id}
     markerWidth="20"
     markerHeight="20"
-    width={20}
-    height={20}
+    width={22}
+    height={22}
     orient={0}
     markerUnits="userSpaceOnUse"
     refX={id.startsWith('start')?20: 0}
@@ -48,40 +49,40 @@ export function MarkerDefinition({ color, id }: MarkerDefinitionsProps) {
       case "start-many":
         return (
           <>
-            <line x1={0} y1={0} x2={20} y2={10} stroke={color} />
-            <line x1={0} y1={10} x2={20} y2={10} stroke={color} />
-            <line x1={0} y1={20} x2={20} y2={10} stroke={color} />
+            <line x1={0} y1={0} x2={20} y2={10} className={clsx(color)} />
+            <line x1={0} y1={10} x2={20} y2={10} className={clsx(color)} />
+            <line x1={0} y1={20} x2={20} y2={10} className={clsx(color)} />
           </>
         );
       case "start-one":
         return (
           <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
-            <line x1={0} y1={10} x2={20} y2={10} stroke={color} />
+            <line x1={10} y1={5} x2={10} y2={15} className={clsx(color)} />
+            <line x1={0} y1={10} x2={20} y2={10} className={clsx(color)} />
           </>
         );
       case "start-one-only":
         return (
           <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
+            <line x1={10} y1={5} x2={10} y2={15} className={clsx(color)} />
           </>
         );
       case "start-zero-or-one":
         return (
           <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
+            <line x1={10} y1={5} x2={10} y2={15} className={clsx(color)} />
           </>
         );
       case "start-one-or-many":
         return (
           <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
+            <line x1={10} y1={5} x2={10} y2={15} className={clsx(color)} />
           </>
         );
       case "start-zero-or-many":
         return (
           <>
-            <line x1={10} y1={5} x2={10} y2={15} stroke={color} />
+            <line x1={10} y1={5} x2={10} y2={15} className={clsx(color)} />
           </>
         );
     }
