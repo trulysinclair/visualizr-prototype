@@ -1,6 +1,6 @@
-import { ITable } from "@/types/table-node";
+import { ITable } from "@/types/table";
 import { memo } from "react";
-import { NodeProps } from "reactflow";
+import { Node, NodeProps } from "reactflow";
 import TableColumn from "./table-column";
 
 /**
