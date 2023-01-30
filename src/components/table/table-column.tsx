@@ -1,5 +1,5 @@
 import Hover from "@/components/table/popover";
-import { IColumn } from "@/types/table-node";
+import { IColumn } from "@/types/table";
 import {
   ExclamationCircleIcon,
   FingerPrintIcon,
