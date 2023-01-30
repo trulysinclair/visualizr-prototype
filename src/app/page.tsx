@@ -5,7 +5,14 @@ import CustomEdge from "@/components/ui/custom-edge";
 import { MarkerDefinition } from "@/components/ui/marker";
 import { SurfaceAppbar } from "@/components/ui/surface-appbar";
 import { Toolbar } from "@/components/ui/toolbar";
-import { useCallback, useEffect, useMemo, useRef, useState, DragEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  DragEvent,
+} from "react";
 import ReactFlow, {
   addEdge,
   Background,
@@ -164,6 +171,7 @@ export default function Home() {
         addEdge(
           {
             ...connection,
+            id: v4(),
             type: "custom",
             data: { text: "test" },
             markerEnd: "end-many",
@@ -204,9 +212,8 @@ export default function Home() {
   //   [dragImage]
   // );
   //#endregion
-  const onDragOver = useCallback(
-    (event: DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
+  const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
 
       event.dataTransfer.dropEffect = "move";
     },
@@ -335,7 +342,7 @@ export default function Home() {
     <main className="h-screen w-full bg-black">
       <ReactFlowProvider>
         <div
-          className="relative h-full w-full rounded-3xl bg-white overflow-hidden"
+          className="relative h-full w-full overflow-hidden rounded-3xl bg-white"
           ref={reactFlowWrapper}
         >
           <SurfaceAppbar />
@@ -357,7 +364,7 @@ export default function Home() {
           >
             <Controls
               position="bottom-right"
-              className="z-20 rounded bg-input-background border-b-secondary overflow-hidden"
+              className="z-20 overflow-hidden rounded border-b-secondary bg-input-background"
             />
             <MarkerDefinition id="start-one" color={strokeColor} />
             <MarkerDefinition id="start-many" color={strokeColor} />
@@ -379,7 +386,11 @@ export default function Home() {
                 Sidebar
               </div>
             </Panel>
-            <Background color="#374151" className="bg-gray-800 fill-white" variant={BackgroundVariant.Lines} />
+            <Background
+              color="#374151"
+              className="bg-gray-800 fill-white"
+              variant={BackgroundVariant.Lines}
+            />
           </ReactFlow>
         </div>
       </ReactFlowProvider>
