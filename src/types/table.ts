@@ -33,4 +33,4 @@ export interface ITable {
  * A table node has a title, a description, and a list of columns.
  * @see https://reactflow.dev/docs/api/node/
  */
-export type TableNode = Node<ITable>;
+export type TableNode = Node<ITable, 'table'>;
