@@ -162,6 +162,12 @@ export default function Home() {
     []
   );
 
+  // get all nodes and edges from the graph and save them to the database (or local storage)
+  const onSave = useCallback(() => {
+    console.log("nodes", nodes);
+    console.log("edges", edges);
+  }, [nodes, edges]);
+
   /**
    * When a connection is made, update the graph.
    */
@@ -215,10 +221,8 @@ export default function Home() {
   const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
 
-      event.dataTransfer.dropEffect = "move";
-    },
-    []
-  );
+    event.dataTransfer.dropEffect = "move";
+  }, []);
 
   /**
    * When a node is dropped, add it to the graph.
