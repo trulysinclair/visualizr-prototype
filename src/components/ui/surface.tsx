@@ -67,7 +67,6 @@ const Surface = () => {
         addEdge(
           {
             ...connection,
-            id: v4(),
             type: "custom",
             data: { text: "test" },
             markerEnd: "end-many",
