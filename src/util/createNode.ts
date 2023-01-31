@@ -14,6 +14,7 @@ export function createNode(
       return {
         id: v4(),
         type,
+        dragHandle:"#drag-handle",
         position,
         data: {
           title: `New Table`,

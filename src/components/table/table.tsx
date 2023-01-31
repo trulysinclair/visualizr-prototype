@@ -33,8 +33,11 @@ const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
   };
 
   return (
-    <div className="group rounded-lg border border-gray-800 bg-secondary shadow duration-200 hover:border-accent-orange focus-visible:outline-none">
-      <div className="rounded-t-lg bg-primary p-2 text-center text-sm  font-normal text-white">
+    <div className="group cursor-auto rounded-lg border border-gray-800 bg-secondary shadow duration-200 hover:border-accent-orange focus-visible:outline-none">
+      <div
+        id="drag-handle"
+        className="cursor-grab rounded-t-lg bg-primary p-2 text-center text-sm font-normal text-white"
+      >
         {data.title}
       </div>
 
