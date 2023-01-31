@@ -66,7 +66,8 @@ const Surface = () => {
           {
             ...connection,
             type: "custom",
-            data: { text: "test" },
+            animated: true,
+            // data: { text: "test" },
             markerEnd: "end-many",
             markerStart: "start-one",
           },
@@ -158,14 +159,16 @@ const Surface = () => {
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             nodeTypes={nodeTypes}
+            onError={(error) => console.log(error)}
             edgeTypes={edgeTypes}
+            defaultViewport={{ zoom: 1.5, x: 0, y: 0 }}
             onConnect={onConnect}
             onInit={onInit}
             onDrop={onDrop}
             snapGrid={[10, 10]}
             snapToGrid={snapToGrid}
             onDragOver={onDragOver}
-            fitView
+            
           >
             <Controls
               position="bottom-right"

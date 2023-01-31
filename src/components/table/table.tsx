@@ -1,7 +1,13 @@
 import { PSQLDataTypes } from "@/types/postgresql";
 import { ITable } from "@/types/table";
-import { memo, useState } from "react";
-import { NodeProps } from "reactflow";
+import { memo, useEffect, useState } from "react";
+import {
+  NodeProps,
+  useNodeId,
+  useReactFlow,
+  useStore,
+  useUpdateNodeInternals,
+} from "reactflow";
 import { v4 } from "uuid";
 import TableColumn from "./table-column";
 
@@ -11,8 +17,19 @@ import TableColumn from "./table-column";
  * A table node has a title, a description, and a list of columns.
  * @see https://reactflow.dev/docs/api/node/
  */
-const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
+const Table = ({ data, isConnectable, dragging }: NodeProps<ITable>) => {
   const [columns, setColumns] = useState(data.columns);
+  const rf = useReactFlow();
+  const nodeId = useNodeId();
+  const updateNodeInternals = useUpdateNodeInternals();
+
+  useEffect(() => {
+    console.log(rf);
+  }, [rf]);
+
+  // useEffect(() => {
+  //   updateNodeInternals(nodeId!);
+  // });
 
   const insertColumn = () => {
     const newColumn = {
@@ -28,8 +45,6 @@ const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
     };
 
     setColumns([...columns, newColumn]);
-    console.log(columns);
-    
   };
 
   return (
@@ -42,13 +57,15 @@ const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
       </div>
 
       {columns.length > 0
-        ? columns.map((column) => (
+        ? columns.map((column, index) => (
             <TableColumn
               key={v4()}
+              parentNodeId={nodeId!}
               type={column.type}
               defaultValue={column.defaultValue}
               description={column.description}
               length={column.length}
+              index={index}
               isNullable={column.isNullable}
               isAutoIncrement={column.isAutoIncrement}
               isUnique={column.isUnique}
@@ -61,8 +78,10 @@ const Table = ({ data, isConnectable }: NodeProps<ITable>) => {
         : null}
 
       <div
-        className="border-2 border-dashed border-input-background px-2 py-1 duration-75 text-sm text-gray-400 hover:text-white flex justify-center hover:bg-accent-green/50 hover:border-accent-green cursor-cell"
-        onClick={() => insertColumn()}
+        className="flex cursor-cell justify-center border-2 border-dashed border-input-background px-2 py-1 text-sm text-gray-400 duration-75 hover:border-accent-green hover:bg-accent-green/50 hover:text-white"
+        onClick={() => {
+          insertColumn();
+        }}
       >
         Add Column
       </div>
