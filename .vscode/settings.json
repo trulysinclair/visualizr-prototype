@@ -18,6 +18,7 @@
     "TSVECTOR",
     "TXID",
     "VARBIT",
-    "VARCHAR"
+    "VARCHAR",
+    "zustand"
   ]
 }
