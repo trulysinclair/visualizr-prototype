@@ -3,18 +3,14 @@ import { IColumn } from "@/types/table";
 import {
   ExclamationCircleIcon,
   FingerPrintIcon,
-  KeyIcon,
+  KeyIcon
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { memo, useEffect, useMemo } from "react";
+import { memo } from "react";
 import {
   Handle,
-  Position,
-  useNodes,
-  useStore,
-  useUpdateNodeInternals,
+  Position
 } from "reactflow";
-import { v4 } from "uuid";
 
 const sharedClasses = clsx(
   "h-2 w-2 duration-200 border-none bg-accent-orange opacity-0",
@@ -24,18 +20,10 @@ const sharedClasses = clsx(
 interface TableColumnProps extends IColumn {
   isConnectable: boolean;
   parentNodeId: string;
-  index:number
+  index: number;
 }
 
 const TableColumn = (props: TableColumnProps) => {
-  const sourceHandleId = useMemo(() => v4(), []);
-  const targetHandleId = useMemo(() => v4(), []);
-  const updateNodeInternals = useUpdateNodeInternals();
-
-  // useEffect(() => {
-  //   updateNodeInternals(props.parentNodeId);
-  // });
-
   return (
     <div className="relative border-b border-primary px-2 py-1 font-mono text-sm text-gray-400 duration-100 hover:bg-primary/50 hover:text-gray-200">
       <Handle
@@ -43,8 +31,9 @@ const TableColumn = (props: TableColumnProps) => {
         type="target"
         position={Position.Left}
         className={clsx(
-          // "-left-[5px]",
-           sharedClasses)}
+          "-left-[5px]",
+          sharedClasses
+        )}
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={props.isConnectable}
       />
@@ -99,8 +88,9 @@ const TableColumn = (props: TableColumnProps) => {
         type="source"
         position={Position.Right}
         className={clsx(
-          // "-right-[5px]",
-           sharedClasses)}
+          "-right-[5px]",
+          sharedClasses
+        )}
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={props.isConnectable}
       />
