@@ -1,5 +1,6 @@
 import { PSQLDataTypes } from "@/types/postgresql";
 import { ITable } from "@/types/table";
+import clsx from "clsx";
 import { memo, useEffect, useState } from "react";
 import {
   NodeProps,
@@ -9,7 +10,7 @@ import {
   useUpdateNodeInternals,
 } from "reactflow";
 import { v4 } from "uuid";
-import TableColumn from "./table-column";
+import TableColumn from "./column";
 
 /**
  * A custom node which represents a table in a database.
@@ -17,19 +18,9 @@ import TableColumn from "./table-column";
  * A table node has a title, a description, and a list of columns.
  * @see https://reactflow.dev/docs/api/node/
  */
-const Table = ({ data, isConnectable, dragging }: NodeProps<ITable>) => {
+const Table = ({ data, isConnectable, selected }: NodeProps<ITable>) => {
   const [columns, setColumns] = useState(data.columns);
-  const rf = useReactFlow();
   const nodeId = useNodeId();
-  const updateNodeInternals = useUpdateNodeInternals();
-
-  useEffect(() => {
-    console.log(rf);
-  }, [rf]);
-
-  // useEffect(() => {
-  //   updateNodeInternals(nodeId!);
-  // });
 
   const insertColumn = () => {
     const newColumn = {
@@ -48,7 +39,12 @@ const Table = ({ data, isConnectable, dragging }: NodeProps<ITable>) => {
   };
 
   return (
-    <div className="group cursor-auto rounded-lg border border-gray-800 bg-secondary shadow duration-200 hover:border-accent-orange focus-visible:outline-none">
+    <div
+      className={clsx(
+        "group cursor-auto rounded-lg border border-gray-800 bg-secondary shadow-md duration-200 hover:border-accent-orange focus-visible:outline-none",
+        selected && "border-accent-orange"
+      )}
+    >
       <div
         id="drag-handle"
         className="cursor-grab rounded-t-lg bg-primary p-2 text-center text-sm font-normal text-white"
