@@ -160,3 +160,21 @@ export type PSQLDataTypes =
   | PSQLTextSearchType
   | PSQLAliases
   | PSQLEnumType;
+
+// merge enums into one enum
+export const PSQLDataTypes = {
+  ...PSQLNumericType,
+  ...PSQLMonetaryType,
+  ...PSQLCharacterType,
+  ...PSQLBinaryType,
+  ...PSQLDateTimeType,
+  ...PSQLBooleanType,
+  ...PSQLNetworkType,
+  ...PSQLGeometryType,
+  ...PSQLJsonType,
+  ...PSQLUuidType,
+  ...PSQLXmlType,
+  ...PSQLTextSearchType,
+  ...PSQLAliases,
+  ...PSQLEnumType,
+};

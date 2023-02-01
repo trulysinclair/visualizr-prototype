@@ -8,7 +8,7 @@ export interface IColumn {
   isUnique: boolean;
   type: PSQLDataTypes;
   length?: number;
-  defaultValue: string;
+  defaultValue?: string;
   description: string;
   isAutoIncrement: boolean;
   isArray?: boolean;
@@ -33,4 +33,4 @@ export interface ITable {
  * A table node has a title, a description, and a list of columns.
  * @see https://reactflow.dev/docs/api/node/
  */
-export type TableNode = Node<ITable, 'table'>;
+export type TableNode = Node<ITable, "table">;
