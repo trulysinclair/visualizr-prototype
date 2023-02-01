@@ -1,6 +1,5 @@
 import Table from "@/components/table/table";
 import CustomEdge from "@/components/ui/custom-edge";
-import { MarkerDefinition } from "@/components/ui/marker";
 import { SurfaceAppbar } from "@/components/ui/surface-appbar";
 import { Toolbar } from "@/components/ui/toolbar";
 import { createNode } from "@/util/createNode";
@@ -20,7 +19,6 @@ import ReactFlow, {
   Controls,
   Edge,
   MiniMap,
-  Panel,
   ReactFlowInstance,
   ReactFlowProvider,
   useEdgesState,
@@ -44,6 +42,7 @@ const selector = (state: RFState) => ({
   setEdge: state.setEdge,
   setNode: state.setNode,
   setReactFlowWrapper: state.setReactFlowWrapper,
+});
 
 const Surface = () => {
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
@@ -59,9 +58,7 @@ const Surface = () => {
     reactFlowInstance,
   } = useStore(selector, shallow);
   const [snapToGrid, setSnapToGrid] = useState(false);
-
-  const strokeColor = "stroke-accent-orange";
-
+  // const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
 
   const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -125,22 +122,13 @@ const Surface = () => {
             snapGrid={[10, 10]}
             snapToGrid={snapToGrid}
             onDragOver={onDragOver}
-            
           >
             <Controls
               position="bottom-right"
               className="z-20 overflow-hidden rounded border-b-secondary bg-input-background"
             />
-            <MarkerDefinition id="start-one" color={strokeColor} />
-            <MarkerDefinition id="start-many" color={strokeColor} />
-            <MarkerDefinition id="start-zero-or-one" color={strokeColor} />
-            <MarkerDefinition id="start-one-or-many" color={strokeColor} />
-            <MarkerDefinition id="start-zero-or-many" color={strokeColor} />
-            <MarkerDefinition id="end-one" color={strokeColor} />
-            <MarkerDefinition id="end-many" color={strokeColor} />
-            <MarkerDefinition id="end-zero-or-one" color={strokeColor} />
-            <MarkerDefinition id="end-one-or-many" color={strokeColor} />
-            <MarkerDefinition id="end-zero-or-many" color={strokeColor} />
+            <MarkerDefinitions strokeColor="stroke-accent-orange" />
+
             <MiniMap position="bottom-left" className="z-20" />
             <Toolbar />
             <Sidebar />
