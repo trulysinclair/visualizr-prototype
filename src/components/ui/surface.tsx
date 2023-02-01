@@ -143,14 +143,7 @@ const Surface = () => {
             <MarkerDefinition id="end-zero-or-many" color={strokeColor} />
             <MiniMap position="bottom-left" className="z-20" />
             <Toolbar />
-            <Panel
-              position="top-right"
-              className="!inset-y-0 !right-0 flex items-center"
-            >
-              <div className="space-y-2 rounded-2xl bg-primary p-4 text-white shadow-md">
-                Sidebar
-              </div>
-            </Panel>
+            <Sidebar />
             <Background
               color="#374151"
               className="bg-gray-800 fill-white"
