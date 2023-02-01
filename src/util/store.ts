@@ -11,6 +11,7 @@ import {
   NodeChange,
   OnConnect,
   OnEdgesChange,
+  OnInit,
   OnNodesChange,
   ReactFlowInstance,
 } from "reactflow";
@@ -24,7 +25,7 @@ export type RFState = {
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  onInit: (flowInstance: ReactFlowInstance) => void;
+  onInit: OnInit;
   onDrop: (event: DragEvent<HTMLDivElement>) => void;
   setNode: (nodes: Node) => void;
   setEdge: (edges: Edge) => void;
