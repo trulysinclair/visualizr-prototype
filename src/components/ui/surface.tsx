@@ -26,91 +26,47 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
 } from "reactflow";
+import { Sidebar } from "./sidebar";
+import { shallow } from "zustand/shallow";
+import useStore, { RFState } from "@/util/store";
+import { MarkerDefinitions } from "./marker-definitions";
+
+const selector = (state: RFState) => ({
+  nodes: state.nodes,
+  edges: state.edges,
+  reactFlowInstance: state.reactFlowInstance,
+  reactFlowWrapper: state.reactFlowWrapper,
+  onDrop: state.onDrop,
+  onInit: state.onInit,
+  onNodesChange: state.onNodesChange,
+  onEdgesChange: state.onEdgesChange,
+  onConnect: state.onConnect,
+  setEdge: state.setEdge,
+  setNode: state.setNode,
+  setReactFlowWrapper: state.setReactFlowWrapper,
 
 const Surface = () => {
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
-
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
-
-  // const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
-  const [reactflowInstance, setReactflowInstance] =
-    useState<ReactFlowInstance | null>(null);
-  /** When the user holds `Shift`, we enable snapping. */
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    onInit,
+    onDrop,
+    setReactFlowWrapper,
+    reactFlowInstance,
+  } = useStore(selector, shallow);
   const [snapToGrid, setSnapToGrid] = useState(false);
 
   const strokeColor = "stroke-accent-orange";
 
-  /**
-   * When the graph is initialized, set the nodes and edges.
-   */
-  const onInit = useCallback(
-    (flowInstance: ReactFlowInstance) => {
-      setNodes([...nodes]);
-      setEdges([...edges]);
-
-      if (!reactflowInstance) {
-        setReactflowInstance(flowInstance);
-      }
-    },
-    [nodes, edges, setNodes, setEdges, reactflowInstance]
-  );
-
-  /**
-   * When a connection is made, update the graph.
-   */
-  const onConnect = useCallback(
-    (connection: Connection) => {
-      setEdges((edges) =>
-        addEdge(
-          {
-            ...connection,
-            type: "custom",
-            animated: true,
-            // data: { text: "test" },
-            markerEnd: "end-many",
-            markerStart: "start-one",
-          },
-          edges
-        )
-      );
-    },
-    [setEdges]
-  );
 
   const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
-
-  const onDrop = useCallback(
-    (event: {
-      preventDefault: () => void;
-      dataTransfer: { getData: (arg0: string) => any };
-      clientX: number;
-      clientY: number;
-    }) => {
-      event.preventDefault();
-
-      const reactFlowBounds = reactFlowWrapper.current?.getBoundingClientRect();
-      console.log(reactFlowBounds);
-
-      const type = event.dataTransfer.getData("application/reactflow");
-
-      // check if the dropped element is valid
-      if (typeof type === "undefined" || !type) {
-        return;
-      }
-
-      const position = reactflowInstance?.project({
-        x: event.clientX - reactFlowBounds!.left,
-        y: event.clientY - reactFlowBounds!.top,
-      });
-
-      setNodes((nodes) => nodes.concat(createNode(type, position!)));
-    },
-    [reactflowInstance, setNodes]
-  );
 
   const nodeTypes = useMemo(
     () => ({
@@ -127,7 +83,6 @@ const Surface = () => {
   );
 
   useEffect(() => {
-    // listen for shift key to toggle snap to grid
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Shift") {
         setSnapToGrid(true);
@@ -142,7 +97,9 @@ const Surface = () => {
 
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("keyup", onKeyUp);
-  }, [reactflowInstance]);
+
+    setReactFlowWrapper(reactFlowWrapper);
+  }, [reactFlowInstance, setReactFlowWrapper]);
 
   return (
     <main className="h-screen w-full bg-black">
