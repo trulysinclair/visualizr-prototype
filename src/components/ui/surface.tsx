@@ -1,6 +1,6 @@
 import Table from "@/components/table/table";
 import CustomEdge from "@/components/ui/custom-edge";
-import { SurfaceAppbar } from "@/components/ui/surface-appbar";
+import { SurfaceAppbar } from "@/components/ui/appbar";
 import { Toolbar } from "@/components/ui/toolbar";
 import { createNode } from "@/util/createNode";
 import {
