@@ -1,5 +1,6 @@
-import { createNode } from "@/util/createNode";
-import { MutableRefObject, DragEvent } from "react";
+import { createNode } from "@/util/create-node";
+import { Notification } from "@/util/notification-store";
+import { MutableRefObject, DragEvent, MouseEvent } from "react";
 import {
   addEdge,
   applyEdgeChanges,
@@ -11,12 +12,13 @@ import {
   NodeChange,
   OnConnect,
   OnEdgesChange,
+  OnInit,
   OnNodesChange,
   ReactFlowInstance,
 } from "reactflow";
 import { create } from "zustand";
 
-export type RFState = {
+export type VisualizrAppState = {
   nodes: Node[];
   edges: Edge[];
   reactFlowInstance: ReactFlowInstance | null;
@@ -24,17 +26,24 @@ export type RFState = {
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  onInit: (flowInstance: ReactFlowInstance) => void;
+  onInit: OnInit;
   onDrop: (event: DragEvent<HTMLDivElement>) => void;
   setNode: (nodes: Node) => void;
   setEdge: (edges: Edge) => void;
   setReactFlowWrapper: (
     reactFlowWrapper: MutableRefObject<HTMLDivElement | null>
   ) => void;
+  onSave: (
+    event: MouseEvent<HTMLButtonElement>,
+    dispatchNotification: (notification: Notification) => void
+  ) => void;
+  onLoad: (
+    event: MouseEvent<HTMLButtonElement>,
+    dispatchNotification: (notification: Notification) => void
+  ) => void;
 };
 
-// this is our useStore hook that we can use in our components to get parts of the store and call actions
-const useStore = create<RFState>((set, get) => ({
+const useAppStore = create<VisualizrAppState>((set, get) => ({
   nodes: [],
   edges: [],
   reactFlowInstance: null,
@@ -108,6 +117,58 @@ const useStore = create<RFState>((set, get) => ({
       reactFlowWrapper: reactFlowWrapper,
     });
   },
+  onSave: (event, dispatchNotification) => {
+    event.preventDefault();
+
+    const data = {
+      nodes: get().nodes,
+      edges: get().edges,
+    };
+
+    try {
+      localStorage.setItem("reactflow", JSON.stringify(data));
+
+      dispatchNotification({
+        title: "Saved",
+        message: "Your data has been saved.",
+        type: "success",
+      });
+    } catch (error) {
+      dispatchNotification({
+        title: "Error",
+        message: "Unknown error occurred.",
+        type: "error",
+      });
+    }
+  },
+  onLoad: (event, dispatchNotification) => {
+    event.preventDefault();
+
+    try {
+      if (localStorage.getItem("reactflow") == null)
+        throw "There is no data to load.";
+      else {
+        const data = JSON.parse(localStorage.getItem("reactflow")!);
+        set({
+          nodes: data.nodes,
+          edges: data.edges,
+        });
+        console.log(data);
+
+        dispatchNotification({
+          title: "Loaded",
+          message: "Your data has been loaded.",
+          type: "success",
+        });
+      }
+    } catch (error) {
+      dispatchNotification({
+        title: "Error",
+        message: `${error}`,
+        type: "error",
+      });
+    }
+  },
 }));
 
-export default useStore;
+export default useAppStore;
