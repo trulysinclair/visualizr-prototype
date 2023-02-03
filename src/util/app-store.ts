@@ -1,5 +1,6 @@
-import { createNode } from "@/util/createNode";
-import { MutableRefObject, DragEvent } from "react";
+import { createNode } from "@/util/create-node";
+import { Notification } from "@/util/notification-store";
+import { MutableRefObject, DragEvent, MouseEvent } from "react";
 import {
   addEdge,
   applyEdgeChanges,
@@ -17,7 +18,7 @@ import {
 } from "reactflow";
 import { create } from "zustand";
 
-export type RFState = {
+export type VisualizrAppState = {
   nodes: Node[];
   edges: Edge[];
   reactFlowInstance: ReactFlowInstance | null;
@@ -32,10 +33,17 @@ export type RFState = {
   setReactFlowWrapper: (
     reactFlowWrapper: MutableRefObject<HTMLDivElement | null>
   ) => void;
+  onSave: (
+    event: MouseEvent<HTMLButtonElement>,
+    dispatchNotification: (notification: Notification) => void
+  ) => void;
+  onLoad: (
+    event: MouseEvent<HTMLButtonElement>,
+    dispatchNotification: (notification: Notification) => void
+  ) => void;
 };
 
-// this is our useStore hook that we can use in our components to get parts of the store and call actions
-const useStore = create<RFState>((set, get) => ({
+const useAppStore = create<VisualizrAppState>((set, get) => ({
   nodes: [],
   edges: [],
   reactFlowInstance: null,
@@ -109,6 +117,38 @@ const useStore = create<RFState>((set, get) => ({
       reactFlowWrapper: reactFlowWrapper,
     });
   },
+  onSave: (event, dispatchNotification) => {
+    event.preventDefault();
+
+    const data = {
+      nodes: get().nodes,
+      edges: get().edges,
+    };
+
+    localStorage.setItem("reactflow", JSON.stringify(data));
+
+    dispatchNotification({
+      title: "Saved",
+      message: "Your data has been saved",
+      type: "success",
+    });
+  },
+  onLoad: (event, dispatchNotification) => {
+    event.preventDefault();
+
+    const data = JSON.parse(localStorage.getItem("reactflow") || "{}");
+
+    set({
+      nodes: data.nodes,
+      edges: data.edges,
+    });
+
+    dispatchNotification({
+      title: "Saved",
+      message: "Your data has been saved",
+      type: "success",
+    });
+  },
 }));
 
-export default useStore;
+export default useAppStore;
