@@ -15,7 +15,6 @@ export type VisualizrNotificationState = {
 const useNotificationStore = create<VisualizrNotificationState>((set) => ({
   notifications: [],
   addNotification: (notification) => {
-
     set((state) => ({
       notifications: [...state.notifications, notification],
     }));

@@ -26,9 +26,9 @@ const NotificationWrapper = (props: NotificationWrapperProps) => {
   useEffect(() => {
     console.log(notifications);
 
-    if (notifications.length > 0) {
-      // setShow(true);
-    }
+    // if (notifications.length > 0) {
+    // setShow(true);
+    // }
 
     if (notifications.length > 0)
       setTimeout(() => {
@@ -45,6 +45,7 @@ const NotificationWrapper = (props: NotificationWrapperProps) => {
           key={index}
           title={notification.title}
           message={notification.message}
+          type={notification.type}
           onDismiss={() => {
             removeNotification(notification);
             // setShow(false);
@@ -57,7 +58,7 @@ const NotificationWrapper = (props: NotificationWrapperProps) => {
   return (
     <Toast.Provider duration={props.duration} swipeDirection="right">
       {renderNotification()}
-      <Toast.Viewport className="fixed space-y-2 top-0 right-0 z-20 p-4" />
+      <Toast.Viewport className="fixed top-0 right-0 z-20 space-y-2 p-4" />
     </Toast.Provider>
   );
 };

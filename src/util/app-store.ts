@@ -125,29 +125,49 @@ const useAppStore = create<VisualizrAppState>((set, get) => ({
       edges: get().edges,
     };
 
-    localStorage.setItem("reactflow", JSON.stringify(data));
+    try {
+      localStorage.setItem("reactflow", JSON.stringify(data));
 
-    dispatchNotification({
-      title: "Saved",
-      message: "Your data has been saved",
-      type: "success",
-    });
+      dispatchNotification({
+        title: "Saved",
+        message: "Your data has been saved.",
+        type: "success",
+      });
+    } catch (error) {
+      dispatchNotification({
+        title: "Error",
+        message: "Unknown error occurred.",
+        type: "error",
+      });
+    }
   },
   onLoad: (event, dispatchNotification) => {
     event.preventDefault();
 
-    const data = JSON.parse(localStorage.getItem("reactflow") || "{}");
+    try {
+      if (localStorage.getItem("reactflow") == null)
+        throw "There is no data to load.";
+      else {
+        const data = JSON.parse(localStorage.getItem("reactflow")!);
+        set({
+          nodes: data.nodes,
+          edges: data.edges,
+        });
+        console.log(data);
 
-    set({
-      nodes: data.nodes,
-      edges: data.edges,
-    });
-
-    dispatchNotification({
-      title: "Saved",
-      message: "Your data has been saved",
-      type: "success",
-    });
+        dispatchNotification({
+          title: "Loaded",
+          message: "Your data has been loaded.",
+          type: "success",
+        });
+      }
+    } catch (error) {
+      dispatchNotification({
+        title: "Error",
+        message: `${error}`,
+        type: "error",
+      });
+    }
   },
 }));
 
