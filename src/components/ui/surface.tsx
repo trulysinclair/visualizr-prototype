@@ -2,7 +2,7 @@ import Table from "@/components/table/table";
 import CustomEdge from "@/components/ui/custom-edge";
 import { SurfaceAppbar } from "@/components/ui/appbar";
 import { Toolbar } from "@/components/ui/toolbar";
-import { createNode } from "@/util/createNode";
+import { createNode } from "@/util/create-node";
 import {
   DragEvent,
   useCallback,
@@ -26,22 +26,20 @@ import ReactFlow, {
 } from "reactflow";
 import { Sidebar } from "./sidebar";
 import { shallow } from "zustand/shallow";
-import useStore, { RFState } from "@/util/store";
+import useAppStore, { VisualizrAppState } from "@/util/app-store";
 import { MarkerDefinitions } from "./marker-definitions";
+import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
 
-const selector = (state: RFState) => ({
+const selector = (state: VisualizrAppState) => ({
   nodes: state.nodes,
   edges: state.edges,
   reactFlowInstance: state.reactFlowInstance,
-  reactFlowWrapper: state.reactFlowWrapper,
-  onDrop: state.onDrop,
+  setReactFlowWrapper: state.setReactFlowWrapper,
   onInit: state.onInit,
+  onDrop: state.onDrop,
+  onConnect: state.onConnect,
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
-  onConnect: state.onConnect,
-  setEdge: state.setEdge,
-  setNode: state.setNode,
-  setReactFlowWrapper: state.setReactFlowWrapper,
 });
 
 const Surface = () => {
@@ -49,14 +47,14 @@ const Surface = () => {
   const {
     nodes,
     edges,
-    onNodesChange,
-    onEdgesChange,
-    onConnect,
+    reactFlowInstance,
+    setReactFlowWrapper,
     onInit,
     onDrop,
-    setReactFlowWrapper,
-    reactFlowInstance,
-  } = useStore(selector, shallow);
+    onConnect,
+    onNodesChange,
+    onEdgesChange,
+  } = useAppStore(selector, shallow);
   const [snapToGrid, setSnapToGrid] = useState(false);
   // const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
 
@@ -106,6 +104,7 @@ const Surface = () => {
           ref={reactFlowWrapper}
         >
           <SurfaceAppbar />
+          <NotificationWrapper duration={3000} />
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -128,7 +127,6 @@ const Surface = () => {
               className="z-20 overflow-hidden rounded border-b-secondary bg-input-background"
             />
             <MarkerDefinitions strokeColor="stroke-accent-orange" />
-
             <MiniMap position="bottom-left" className="z-20" />
             <Toolbar />
             <Sidebar />
