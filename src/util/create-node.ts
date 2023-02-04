@@ -9,18 +9,21 @@ export function createNode(
   type: "table" | "function" | "trigger",
   position: XYPosition
 ): TableNode | FunctionNode | TriggerNode {
+  const id = v4();
+
   switch (type) {
     case "table":
       return {
-        id: v4(),
+        id: id,
         type,
-        dragHandle:"#drag-handle",
+        dragHandle: "#drag-handle",
         position,
         data: {
           title: `New Table`,
           description: "description",
           columns: [
             {
+              id: `${id}-0`,
               name: "id",
               type: PSQLDataTypes.SERIAL,
               isPrimaryKey: true,
@@ -31,6 +34,7 @@ export function createNode(
               description: "The ID of the table",
             },
             {
+              id: `${id}-1`,
               name: "created_at",
               type: PSQLDataTypes.TIMESTAMPTZ,
               isPrimaryKey: false,
@@ -41,6 +45,7 @@ export function createNode(
               description: "The time the row was created",
             },
             {
+              id: `${id}-2`,
               name: "updated_at",
               type: PSQLDataTypes.TIMESTAMPTZ,
               isPrimaryKey: false,
@@ -66,7 +71,7 @@ export function createNode(
           returnType: "",
         },
       };
-      
+
     case "trigger":
       return {
         id: v4(),
