@@ -27,8 +27,8 @@ import ReactFlow, {
 import { Sidebar } from "./sidebar";
 import { shallow } from "zustand/shallow";
 import useAppStore, { VisualizrAppState } from "@/util/app-store";
-import { MarkerDefinitions } from "./marker-definitions";
 import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
+import { MarkerDefinitions } from "./markers/marker-definitions";
 
 const selector = (state: VisualizrAppState) => ({
   nodes: state.nodes,

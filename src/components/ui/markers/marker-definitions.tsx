@@ -1,4 +1,4 @@
-import { MarkerDefinition } from "@/components/ui/marker";
+import { MarkerDefinition } from "@/components/ui/markers/marker";
 import { Fragment } from "react";
 
 export const MarkerDefinitions = ({ strokeColor }: { strokeColor: string }) => (
