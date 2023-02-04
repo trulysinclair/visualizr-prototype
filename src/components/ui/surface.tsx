@@ -1,8 +1,9 @@
-import Table from "@/components/table/table";
-import CustomEdge from "@/components/ui/custom-edge";
-import { SurfaceAppbar } from "@/components/ui/appbar";
+import Relationship from "@/components/edges/relationship";
+import Table from "@/components/nodes/table/table";
+import { AppBar } from "@/components/ui/app-bar/app-bar";
+import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
 import { Toolbar } from "@/components/ui/toolbar";
-import { createNode } from "@/util/create-node";
+import useAppStore, { VisualizrAppState } from "@/util/app-store";
 import {
   DragEvent,
   useCallback,
@@ -12,23 +13,14 @@ import {
   useState,
 } from "react";
 import ReactFlow, {
-  addEdge,
   Background,
   BackgroundVariant,
-  Connection,
   Controls,
-  Edge,
   MiniMap,
-  ReactFlowInstance,
   ReactFlowProvider,
-  useEdgesState,
-  useNodesState,
 } from "reactflow";
-import { Sidebar } from "./sidebar";
 import { shallow } from "zustand/shallow";
-import useAppStore, { VisualizrAppState } from "@/util/app-store";
-import { MarkerDefinitions } from "./marker-definitions";
-import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
+import { MarkerDefinitions } from "./markers/marker-definitions";
 
 const selector = (state: VisualizrAppState) => ({
   nodes: state.nodes,
@@ -72,7 +64,7 @@ const Surface = () => {
 
   const edgeTypes = useMemo(
     () => ({
-      custom: CustomEdge,
+      relationship: Relationship,
     }),
     []
   );
@@ -100,10 +92,10 @@ const Surface = () => {
     <main className="h-screen w-full bg-black">
       <ReactFlowProvider>
         <div
-          className="relative h-full w-full overflow-hidden rounded-3xl bg-white"
+          className="relative h-full w-full overflow-hidden"
           ref={reactFlowWrapper}
         >
-          <SurfaceAppbar />
+          <AppBar />
           <NotificationWrapper duration={3000} />
           <ReactFlow
             nodes={nodes}
@@ -112,7 +104,8 @@ const Surface = () => {
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             nodeTypes={nodeTypes}
-            onError={(error) => console.log(error)}
+            // onError={(error) => console.log(error)}
+            nodeOrigin={[0.5, 0.5]}
             edgeTypes={edgeTypes}
             defaultViewport={{ zoom: 1.5, x: 0, y: 0 }}
             onConnect={onConnect}
@@ -129,7 +122,7 @@ const Surface = () => {
             <MarkerDefinitions strokeColor="stroke-accent-orange" />
             <MiniMap position="bottom-left" className="z-20" />
             <Toolbar />
-            <Sidebar />
+            {/* <Sidebar /> */}
             <Background
               color="#374151"
               className="bg-gray-800 fill-white"

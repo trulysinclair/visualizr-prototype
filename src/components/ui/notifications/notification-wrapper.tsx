@@ -24,8 +24,6 @@ const NotificationWrapper = (props: NotificationWrapperProps) => {
 
   // TODO: Make sure that notifications are timed out in the order they were added instead of removing all notifications at once
   useEffect(() => {
-    console.log(notifications);
-
     // if (notifications.length > 0) {
     // setShow(true);
     // }
@@ -34,7 +32,6 @@ const NotificationWrapper = (props: NotificationWrapperProps) => {
       setTimeout(() => {
         // setShow(false);
         removeNotification(notifications[0]);
-        console.log(notifications);
       }, props.duration);
   }, [notifications, props.duration, removeNotification]);
 
