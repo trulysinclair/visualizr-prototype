@@ -129,12 +129,12 @@ const TableColumn = (props: TableColumnProps) => {
         </div>
 
         <div className="flex items-center justify-center px-1">
-          <span>{props.type.toLocaleLowerCase()}</span>
+          <span>{props.type?.toLocaleLowerCase()}</span>
         </div>
       </div>
 
       <Handle
-        id={`${props.parentNodeId}-${props.index}-target`}
+        id={`${props.parentNodeId}-${props.index}-source`}
         type="source"
         position={Position.Right}
         className={clsx("-right-[5px]", sharedClasses)}
