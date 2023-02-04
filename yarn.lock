@@ -493,6 +493,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-toggle@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@radix-ui/react-toggle@npm:1.0.1"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-primitive": 1.0.1
+    "@radix-ui/react-use-controllable-state": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: 9754df4add6c1d4bced810431e51696cd482465aaf84ffca008caf13f5f33e6e4133ce146ae208fede93acfedbfffcee3808794d4f147c949cc15465f3cc22a7
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-use-callback-ref@npm:1.0.0":
   version: 1.0.0
   resolution: "@radix-ui/react-use-callback-ref@npm:1.0.0"
@@ -677,6 +692,25 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: 273fd3f3fc461a92f3790cc551ea054745c6d6959afbe1232e6d7aa1c722bbc114d308aab96bef5c78fc0303c85c7b472ef00e2253251cc89737f3b1af56e5a5
+  languageName: node
+  linkType: hard
+
+"@tabler/icons-react@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@tabler/icons-react@npm:2.2.0"
+  dependencies:
+    "@tabler/icons": 2.2.0
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+  checksum: 9bde60900907f0876a2127b183a67da635ec5e8214897652a8ba114981a653cd0bfa3a0393f7cbee659af536ae7c6e2ffa395355583f2d5ec2e224673559facc
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@tabler/icons@npm:2.2.0"
+  checksum: 8240c3930979304cd6800a70b35efbb40931831f787df4a658ef8c42ded6cc1b001dfb9b15af0d61d074701220e91161918ff1757d3c98f19d120ee39e964753
   languageName: node
   linkType: hard
 
@@ -3395,6 +3429,8 @@ __metadata:
     "@next/font": 13.1.2
     "@radix-ui/react-hover-card": ^1.0.3
     "@radix-ui/react-toast": ^1.1.2
+    "@radix-ui/react-toggle": ^1.0.1
+    "@tabler/icons-react": ^2.2.0
     "@types/js-yaml": ^4
     "@types/node": 18.11.18
     "@types/prettier": ^2
@@ -3905,7 +3941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
