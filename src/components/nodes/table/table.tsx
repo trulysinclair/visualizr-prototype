@@ -1,15 +1,12 @@
 import { PSQLDataTypes } from "@/types/postgresql";
-import { ITable } from "@/types/table";
+import { ITable, TableNode } from "@/types/table";
+import useAppStore from "@/util/app-store";
 import clsx from "clsx";
+import { log } from "console";
 import { memo, useEffect, useState } from "react";
-import {
-  NodeProps,
-  useNodeId,
-  useReactFlow,
-  useStore,
-  useUpdateNodeInternals,
-} from "reactflow";
+import { NodeProps, useNodeId, useUpdateNodeInternals } from "reactflow";
 import { v4 } from "uuid";
+import { shallow } from "zustand/shallow";
 import TableColumn from "./column";
 
 /**
@@ -19,8 +16,16 @@ import TableColumn from "./column";
  * @see https://reactflow.dev/docs/api/node/
  */
 const Table = ({ data, isConnectable, selected }: NodeProps<ITable>) => {
-  const [columns, setColumns] = useState(data.columns);
-  const nodeId = useNodeId();
+  const { updateNode, getNode } = useAppStore(
+    (state) => ({
+      updateNode: state.updateNode,
+      getNode: state.getNode<TableNode>,
+    }),
+    shallow
+  );
+
+  const nodeId = useNodeId()!;
+  const [columns, setColumns] = useState(getNode(nodeId).data.columns);
 
   const insertColumn = () => {
     const newColumn = {
@@ -38,6 +43,12 @@ const Table = ({ data, isConnectable, selected }: NodeProps<ITable>) => {
     setColumns([...columns, newColumn]);
   };
 
+  // update columns in the store
+  useEffect(() => {
+    updateNode(nodeId, { columns });
+    console.log("updated columns");
+  }, [columns, nodeId, updateNode, getNode]);
+
   return (
     <div
       className={clsx(
@@ -47,15 +58,23 @@ const Table = ({ data, isConnectable, selected }: NodeProps<ITable>) => {
     >
       <div
         id="drag-handle"
-        className="cursor-grab rounded-t-lg bg-primary p-2 text-center text-sm font-normal text-white"
+        className="flex shrink cursor-grab items-center justify-center rounded-t-lg bg-primary p-2 text-center text-sm font-normal text-white"
       >
-        {data.title}
+        <input
+          type="text"
+          value={data.title}
+          onChange={(event) =>
+            updateNode(nodeId, { title: event.target.value })
+          }
+          className="flex shrink truncate rounded bg-secondary/70 text-center text-sm font-normal text-white focus:outline-none"
+        />
       </div>
 
       {columns.length > 0
         ? columns.map((column, index) => (
             <TableColumn
               key={v4()}
+              setColumns={setColumns}
               parentNodeId={nodeId!}
               type={column.type}
               defaultValue={column.defaultValue}

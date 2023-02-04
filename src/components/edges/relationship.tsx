@@ -1,7 +1,7 @@
 import React from "react";
 import { EdgeProps, getBezierPath } from "reactflow";
 
-export default function CustomEdge({
+export default function Relationship({
   id,
   sourceX,
   sourceY,
@@ -12,8 +12,8 @@ export default function CustomEdge({
   style = {},
   data,
   markerEnd,
-  markerStart
-}: EdgeProps<{text:string}>) {
+  markerStart,
+}: EdgeProps<{ text: string }>) {
   const [edgePath] = getBezierPath({
     sourceX: sourceX + 20,
     sourceY,
@@ -33,16 +33,16 @@ export default function CustomEdge({
         markerStart={markerStart}
         markerEnd={markerEnd}
       />
-      {/* <text>
+      <text>
         <textPath
           href={`#${id}`}
           style={{ fontSize: 12 }}
           startOffset="50%"
           textAnchor="middle"
         >
-          {data!.text}
+          {data && data.text !== undefined ? data!.text : null}
         </textPath>
-      </text> */}
+      </text>
     </>
   );
 }

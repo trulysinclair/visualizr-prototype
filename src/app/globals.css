@@ -2,7 +2,7 @@
 @tailwind components;
 
 .react-flow__controls-button {
-  @apply !bg-primary hover:!bg-input-background !border-b-secondary last:!border-none;
+  @apply !border-b-secondary !bg-primary last:!border-none hover:!bg-input-background;
 }
 
 .react-flow__controls-button svg {
@@ -10,10 +10,14 @@
 }
 
 .react-flow__minimap {
-  @apply rounded-lg overflow-hidden !bg-input-background;
+  @apply overflow-hidden rounded-lg !bg-input-background;
 }
 .react-flow__minimap-mask {
   @apply !fill-primary;
+}
+
+.react-flow__minimap-node {
+  @apply fill-accent-orange/70;
 }
 
 @tailwind utilities;

@@ -1,13 +1,19 @@
 "use client";
 import { Squares2X2Icon, TableCellsIcon } from "@heroicons/react/24/outline";
+import { IconAdjustments, IconFunction, IconTable } from "@tabler/icons-react";
 import { Panel } from "reactflow";
-import { DropTool } from "../drop-tool";
+import { DropTool } from "./drop-tool";
 
 export const Toolbar = () => (
-  <Panel position="top-left" className="top-1/2 flex items-center">
-    <div className="space-y-2 rounded-2xl bg-primary p-4 text-black shadow-md">
-      <DropTool type="table" icon={<TableCellsIcon className="h-6 w-6" />} />
-      <DropTool type="table" icon={<Squares2X2Icon className="h-6 w-6" />} />
+  <Panel
+    position="bottom-center"
+    className="left-1/2 -mx-0 -translate-x-1/2 rounded-2xl bg-primary p-4 text-center shadow-md"
+  >
+    <h2 className="mb-2 font-medium text-gray-200">Droppables</h2>
+    <div className="flex space-x-2 text-black ">
+      <DropTool type="table" icon={<IconTable />} className="" />
+      {/* <DropTool type="function" icon={<IconFunction />} className="" /> */}
+      {/* <DropTool type="trigger" icon={<IconAdjustments />} className="" /> */}
     </div>
   </Panel>
 );
