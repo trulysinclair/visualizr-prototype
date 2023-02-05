@@ -124,6 +124,20 @@ const useAppStore = create<VisualizrAppState>((set, get) => ({
       nodes: [...get().nodes, node],
     });
   },
+  updateNode: (id: string, data: Partial<ITable>) => {
+    set({
+      nodes: get().nodes.map((node) => {
+        if (node.id == id) {
+          node.data = {
+            ...node.data,
+            ...data,
+          };
+        }
+
+        return node;
+      }) as TableNode[],
+    });
+  },
   setEdge: (edges: Edge) => {
     set({
       edges: [...get().edges, edges],
@@ -237,20 +251,6 @@ const useAppStore = create<VisualizrAppState>((set, get) => ({
         type: "error",
       });
     }
-  },
-  updateNode: (id: string, data: Partial<ITable>) => {
-    set({
-      nodes: get().nodes.map((node) => {
-        if (node.id == id) {
-          node.data = {
-            ...node.data,
-            ...data,
-          };
-        }
-
-        return node;
-      }) as TableNode[],
-    });
   },
 }));
 
