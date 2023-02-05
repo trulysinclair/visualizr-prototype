@@ -11,7 +11,7 @@ export const Sidebar = () => {
   const [selectedNodeData, setSelectedNodeData] = useState<ITable>(
     {} as ITable
   );
-  const { updateNode, getNode } = useVisualizrStore();
+  const { updateNode, getNode, nodes } = useVisualizrStore();
 
   // When the user selects a node, update the sidebar
   useOnSelectionChange({
@@ -32,6 +32,12 @@ export const Sidebar = () => {
     console.log(selectedNodeData);
     updateNode(selectedNode.id, selectedNodeData);
   }, [selectedNodeData, updateNode, selectedNode]);
+
+  // when the nodes are updated, update the selected node
+  useEffect(() => {
+    if (selectedNode == null) return;
+    setSelectedNodeData(getNode<TableNode>(selectedNode.id).data);
+  }, [nodes, getNode, selectedNode]);
 
   return (
     <Panel
