@@ -1,5 +1,6 @@
 import { ITable, TableNode } from "@/types/table";
-import useAppStore from "@/util/stores/app-store";
+import useAppStore from "@/util/store/app-slice";
+import useVisualizrStore from "@/util/store/use-visualizr-store";
 import { useEffect, useState } from "react";
 import { Edge, Panel, useOnSelectionChange } from "reactflow";
 import { shallow } from "zustand/shallow";
@@ -10,13 +11,7 @@ export const Sidebar = () => {
   const [selectedNodeData, setSelectedNodeData] = useState<ITable>(
     {} as ITable
   );
-  const { updateNode, getNode } = useAppStore(
-    (state) => ({
-      updateNode: state.updateNode,
-      getNode: state.getNode<TableNode>,
-    }),
-    shallow
-  );
+  const { updateNode, getNode } = useVisualizrStore();
 
   // When the user selects a node, update the sidebar
   useOnSelectionChange({

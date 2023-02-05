@@ -1,12 +1,10 @@
 import { PSQLDataTypes } from "@/types/postgresql";
 import { ITable, TableNode } from "@/types/table";
-import useAppStore from "@/util/stores/app-store";
+import useVisualizrStore from "@/util/store/use-visualizr-store";
 import clsx from "clsx";
-import { log } from "console";
 import { memo, useEffect, useState } from "react";
-import { NodeProps, useNodeId, useUpdateNodeInternals } from "reactflow";
+import { NodeProps, useNodeId } from "reactflow";
 import { v4 } from "uuid";
-import { shallow } from "zustand/shallow";
 import TableColumn from "./column";
 
 /**
@@ -16,16 +14,17 @@ import TableColumn from "./column";
  * @see https://reactflow.dev/docs/api/node/
  */
 const Table = ({ data, isConnectable, selected }: NodeProps<ITable>) => {
-  const { updateNode, getNode } = useAppStore(
-    (state) => ({
-      updateNode: state.updateNode,
-      getNode: state.getNode<TableNode>,
-    }),
-    shallow
-  );
+  // const { updateNode, getNode } = useAppStore((state) => ({
+  //   updateNode: state.updateNode,
+  //   getNode: state.getNode<TableNode>,
+  // }));
+
+  const { updateNode, getNode } = useVisualizrStore();
 
   const nodeId = useNodeId()!;
-  const [columns, setColumns] = useState(getNode(nodeId).data.columns.concat());
+  const [columns, setColumns] = useState(
+    getNode<TableNode>(nodeId).data.columns.concat()
+  );
 
   const insertColumn = () => {
     const newColumn = {

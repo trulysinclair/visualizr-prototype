@@ -4,7 +4,8 @@ import { AppBar } from "@/components/ui/app-bar/app-bar";
 import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
 import { Sidebar } from "@/components/ui/sidebar";
 import { Toolbar } from "@/components/ui/toolbar";
-import useAppStore, { VisualizrAppState } from "@/util/stores/app-store";
+import useAppStore, { AppSlice } from "@/util/store/app-slice";
+import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
   DragEvent,
   useCallback,
@@ -23,7 +24,7 @@ import ReactFlow, {
 import { shallow } from "zustand/shallow";
 import { MarkerDefinitions } from "./markers/marker-definitions";
 
-const selector = (state: VisualizrAppState) => ({
+const selector = (state: AppSlice) => ({
   nodes: state.nodes,
   edges: state.edges,
   reactFlowInstance: state.reactFlowInstance,
@@ -37,6 +38,7 @@ const selector = (state: VisualizrAppState) => ({
 
 const Surface = () => {
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
+
   const {
     nodes,
     edges,
@@ -47,7 +49,8 @@ const Surface = () => {
     onConnect,
     onNodesChange,
     onEdgesChange,
-  } = useAppStore(selector, shallow);
+  } = useVisualizrStore();
+  
   const [snapToGrid, setSnapToGrid] = useState(false);
   // const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
 

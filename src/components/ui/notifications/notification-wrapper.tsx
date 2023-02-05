@@ -1,4 +1,5 @@
-import useNotificationStore from "@/util/stores/notification-store";
+import createNotificationSlice from "@/util/store/notification-slice";
+import useVisualizrStore from "@/util/store/use-visualizr-store";
 import { Transition } from "@headlessui/react";
 import * as Toast from "@radix-ui/react-toast";
 import { log } from "console";
@@ -12,25 +13,12 @@ type NotificationWrapperProps = {
 };
 
 const NotificationWrapper = (props: NotificationWrapperProps) => {
-  // const [show, setShow] = useState(false);
-
-  const { notifications, removeNotification } = useNotificationStore(
-    (state) => ({
-      notifications: state.notifications,
-      removeNotification: state.removeNotification,
-    }),
-    shallow
-  );
+  const { notifications, removeNotification } = useVisualizrStore();
 
   // TODO: Make sure that notifications are timed out in the order they were added instead of removing all notifications at once
   useEffect(() => {
-    // if (notifications.length > 0) {
-    // setShow(true);
-    // }
-
     if (notifications.length > 0)
       setTimeout(() => {
-        // setShow(false);
         removeNotification(notifications[0]);
       }, props.duration);
   }, [notifications, props.duration, removeNotification]);
@@ -45,7 +33,6 @@ const NotificationWrapper = (props: NotificationWrapperProps) => {
           type={notification.type}
           onDismiss={() => {
             removeNotification(notification);
-            // setShow(false);
           }}
         />
       ));

@@ -1,6 +1,7 @@
 import Hover from "@/components/nodes/table/hover";
 import { IColumn, TableNode } from "@/types/table";
-import useAppStore from "@/util/stores/app-store";
+import useAppStore from "@/util/store/app-slice";
+import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
   ExclamationCircleIcon,
   FingerPrintIcon,
@@ -35,21 +36,23 @@ interface TableColumnProps extends IColumn {
 // TODO: add a way to add triggers
 // TODO: enforce unique constraints as well as primary key constraints, i.e. if a column is a primary key, it should also be unique. This should be enforced in the database as well as in the UI. Additionally, if a column is unique, it should not be nullable. Foreign keys should include constraints that enforce referential integrity. Foreign keys should not be allowed to be repeated in the SQL. When a new primary key is set, we need to update the relationships if they exist, we need to push that key to the top of the table, if a relationship exists and the foreign key type changes it needs to update the remote table or at least warn.
 const TableColumn = (props: TableColumnProps) => {
-  const { updateNode, getNode } = useAppStore(
-    (state) => ({
-      updateNode: state.updateNode,
-      getNode: state.getNode<TableNode>,
-    }),
-    shallow
-  );
+  // const { updateNode, getNode } = useAppStore(
+  //   (state) => ({
+  //     updateNode: state.updateNode,
+  //     getNode: state.getNode<TableNode>,
+  //   }),
+  // );
 
-  const column = getNode(props.parentNodeId).data.columns[props.index];
+  const { updateNode, getNode } = useVisualizrStore();
+  
+
+  const column = getNode<TableNode>(props.parentNodeId).data.columns[props.index];
 
   const nodeId = props.parentNodeId;
 
   const toggleIsPrimaryKey = () => {
     updateNode(nodeId, {
-      columns: getNode(nodeId).data.columns.map((column, index) => {
+      columns: getNode<TableNode>(nodeId).data.columns.map((column, index) => {
         if (index === props.index) {
           return { ...column, isPrimaryKey: !column.isPrimaryKey };
         }
@@ -61,7 +64,7 @@ const TableColumn = (props: TableColumnProps) => {
 
   const toggleIsNullable = () => {
     updateNode(nodeId, {
-      columns: getNode(nodeId).data.columns.map((column, index) => {
+      columns: getNode<TableNode>(nodeId).data.columns.map((column, index) => {
         if (index === props.index) {
           return { ...column, isNullable: !column.isNullable };
         }
@@ -73,7 +76,7 @@ const TableColumn = (props: TableColumnProps) => {
 
   const toggleIsUnique = () => {
     updateNode(nodeId, {
-      columns: getNode(nodeId).data.columns.map((column, index) => {
+      columns: getNode<TableNode>(nodeId).data.columns.map((column, index) => {
         if (index === props.index) {
           return { ...column, isUnique: !column.isUnique };
         }

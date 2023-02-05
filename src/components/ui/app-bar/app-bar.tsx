@@ -1,6 +1,9 @@
 "use client";
-import useAppStore, { ActionDispatcher } from "@/util/stores/app-store";
-import useNotificationStore, { Notification } from "@/util/stores/notification-store";
+import { ActionDispatcher } from "@/util/store/app-slice";
+import createNotificationSlice, {
+  Notification,
+} from "@/util/store/notification-slice";
+import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
   IconDatabaseExport,
   IconDeviceFloppy,
@@ -38,22 +41,8 @@ const AppBarButton = ({
 );
 
 export function AppBar() {
-  const { onSave, onLoad, onImport, onExport } = useAppStore(
-    (state) => ({
-      onSave: state.onSave,
-      onLoad: state.onLoad,
-      onImport: state.onImport,
-      onExport: state.onExport,
-    }),
-    shallow
-  );
-
-  const { addNotification } = useNotificationStore(
-    (state) => ({
-      addNotification: state.addNotification,
-    }),
-    shallow
-  );
+  const { onSave, onLoad, onImport, onExport, addNotification } =
+    useVisualizrStore();
 
   return (
     <div className="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 justify-center">
