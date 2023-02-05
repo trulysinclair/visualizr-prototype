@@ -83,7 +83,7 @@ const TableColumn = (props: TableColumnProps) => {
     });
   };
 
-  return (
+  return column ? (
     <div className="relative border-b border-primary px-2 py-1 font-mono text-sm text-gray-400 duration-100 hover:bg-primary/50 hover:text-gray-200">
       <Handle
         id={`${props.parentNodeId}-${props.index}-target`}
@@ -95,7 +95,7 @@ const TableColumn = (props: TableColumnProps) => {
       />
 
       <div className="grid grid-cols-3">
-        <div className="">{props.name}</div>
+        <div className="">{column.name ? column.name : props.name}</div>
 
         <div className="flex justify-center">
           <Hover
@@ -140,7 +140,9 @@ const TableColumn = (props: TableColumnProps) => {
         </div>
 
         <div className="flex items-center justify-center px-1">
-          <span>{props.type?.toLocaleLowerCase()}</span>
+          <span>
+            {column ? column.type?.toLowerCase() : props.type.toLowerCase()}
+          </span>
         </div>
       </div>
 
@@ -153,7 +155,7 @@ const TableColumn = (props: TableColumnProps) => {
         isConnectable={props.isConnectable}
       />
     </div>
-  );
+  ) : null;
 };
 
 export default memo(TableColumn);
