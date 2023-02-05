@@ -2,6 +2,7 @@ import { PSQLDataTypes } from "@/types/postgresql";
 import { Node } from "reactflow";
 
 export interface IColumn {
+  id: string;
   name: string;
   isPrimaryKey: boolean;
   isNullable: boolean;

@@ -1,8 +1,8 @@
 import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  InformationCircleIcon,
-  XMarkIcon,
+    CheckCircleIcon,
+    ExclamationCircleIcon,
+    InformationCircleIcon,
+    XMarkIcon
 } from "@heroicons/react/24/outline";
 import * as Toast from "@radix-ui/react-toast";
 import clsx from "clsx";

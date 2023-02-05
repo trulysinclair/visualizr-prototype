@@ -1,15 +1,14 @@
-import useAppStore from "@/util/app-store";
+import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
-  Arrow,
-  Content,
-  HoverCard,
-  Portal,
-  Trigger,
+    Arrow,
+    Content,
+    HoverCard,
+    Portal,
+    Trigger
 } from "@radix-ui/react-hover-card";
 import * as Toggle from "@radix-ui/react-toggle";
 import React from "react";
 import { useNodeId } from "reactflow";
-import { shallow } from "zustand/shallow";
 
 type MyPopoverProps = {
   icon: React.ReactElement;
@@ -18,7 +17,7 @@ type MyPopoverProps = {
 };
 
 function Hover(props: MyPopoverProps) {
-  const updateNode = useAppStore((state) => state.updateNode, shallow);
+  const updateNode = useVisualizrStore();
   const nodeId = useNodeId()!;
 
   return (
