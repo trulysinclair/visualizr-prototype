@@ -1,10 +1,10 @@
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
-  Arrow,
-  Content,
-  HoverCard,
-  Portal,
-  Trigger,
+    Arrow,
+    Content,
+    HoverCard,
+    Portal,
+    Trigger
 } from "@radix-ui/react-hover-card";
 import * as Toggle from "@radix-ui/react-toggle";
 import React from "react";

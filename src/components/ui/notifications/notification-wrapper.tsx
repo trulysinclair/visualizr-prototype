@@ -1,10 +1,6 @@
-import createNotificationSlice from "@/util/store/notification-slice";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
-import { Transition } from "@headlessui/react";
 import * as Toast from "@radix-ui/react-toast";
-import { log } from "console";
-import { Fragment, ReactNode, useEffect, useRef, useState } from "react";
-import { shallow } from "zustand/shallow";
+import { ReactNode, useEffect } from "react";
 import Notification from "./notification";
 
 type NotificationWrapperProps = {

@@ -1,5 +1,5 @@
 import { FunctionNode } from "@/types/function";
-import { PSQLDataTypes, PSQLNumericType } from "@/types/postgresql";
+import { PSQLDataTypes } from "@/types/postgresql";
 import { TriggerNode } from "@/types/trigger";
 import { XYPosition } from "reactflow";
 import { v4 } from "uuid";

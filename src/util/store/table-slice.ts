@@ -1,7 +1,5 @@
 import { IColumn, ITable } from "@/types/table";
-import createSelectors from "@/util/create-selectors";
-import { Slice, Store } from "@/util/store/use-visualizr-store";
-import { create, StateCreator } from "zustand";
+import { Slice } from "@/util/store/use-visualizr-store";
 
 type ForeignKey = {
   id: string;

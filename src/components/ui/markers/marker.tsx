@@ -1,6 +1,5 @@
 import clsx from "clsx";
-import React, { ReactNode } from "react";
-import { render } from "react-dom";
+import { ReactNode } from "react";
 
 interface MarkerProps {
   id: string;

@@ -1,7 +1,7 @@
 import createSelectors from "@/util/create-selectors";
 import createAppSlice, { AppSlice } from "@/util/store/app-slice";
 import createNotificationSlice, {
-  NotificationSlice,
+    NotificationSlice
 } from "@/util/store/notification-slice";
 import createTableSlice, { TableSlice } from "@/util/store/table-slice";
 import { create, StateCreator } from "zustand";

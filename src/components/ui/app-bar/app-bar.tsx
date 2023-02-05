@@ -1,18 +1,17 @@
 "use client";
 import { ActionDispatcher } from "@/util/store/app-slice";
-import createNotificationSlice, {
-  Notification,
+import {
+    Notification
 } from "@/util/store/notification-slice";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
-  IconDatabaseExport,
-  IconDeviceFloppy,
-  IconFileImport,
+    IconDatabaseExport,
+    IconDeviceFloppy,
+    IconFileImport
 } from "@tabler/icons-react";
 import clsx from "clsx";
 import Image from "next/image";
 import React, { cloneElement } from "react";
-import { shallow } from "zustand/shallow";
 
 type AppBarButtonProps = {
   action: ActionDispatcher<HTMLButtonElement>;

@@ -45,6 +45,7 @@ const Table = ({ data, isConnectable, selected }: NodeProps<ITable>) => {
       ...columns.filter((item) => item != null && item != undefined),
       newColumn,
     ]);
+    
   };
 
   // update columns in the store

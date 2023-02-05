@@ -1,16 +1,14 @@
 import Hover from "@/components/nodes/table/hover";
 import { IColumn, TableNode } from "@/types/table";
-import useAppStore from "@/util/store/app-slice";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
-  ExclamationCircleIcon,
-  FingerPrintIcon,
-  KeyIcon,
+    ExclamationCircleIcon,
+    FingerPrintIcon,
+    KeyIcon
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { memo } from "react";
 import { Handle, Position } from "reactflow";
-import { shallow } from "zustand/shallow";
 
 const sharedClasses = clsx(
   "h-2 w-2 duration-200 border-none bg-accent-orange opacity-0",

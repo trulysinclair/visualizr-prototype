@@ -1,5 +1,4 @@
-import { Slice, Store } from "@/util/store/use-visualizr-store";
-import { create, StateCreator } from "zustand";
+import { Slice } from "@/util/store/use-visualizr-store";
 
 export type Notification = {
   title: string;
