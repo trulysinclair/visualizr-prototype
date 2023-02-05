@@ -2,6 +2,7 @@ import Relationship from "@/components/edges/relationship";
 import Table from "@/components/nodes/table/table";
 import { AppBar } from "@/components/ui/app-bar/app-bar";
 import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
+import { Sidebar } from "@/components/ui/sidebar";
 import { Toolbar } from "@/components/ui/toolbar";
 import useAppStore, { VisualizrAppState } from "@/util/app-store";
 import {
@@ -122,7 +123,7 @@ const Surface = () => {
             <MarkerDefinitions strokeColor="stroke-accent-orange" />
             <MiniMap position="bottom-left" className="z-20" />
             <Toolbar />
-            {/* <Sidebar /> */}
+            <Sidebar />
             <Background
               color="#374151"
               className="bg-gray-800 fill-white"
