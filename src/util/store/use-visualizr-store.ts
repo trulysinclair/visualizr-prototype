@@ -9,7 +9,7 @@ import { create, StateCreator } from "zustand";
 export type Store = NotificationSlice & AppSlice & TableSlice;
 export type Slice<T> = StateCreator<Store, [], [], T>;
 
-const useVisualizrStore = create<Store>((...all) => ({
+const useVisualizrStore = create<Store>()((...all) => ({
   ...createAppSlice(...all),
   ...createTableSlice(...all),
   ...createNotificationSlice(...all),

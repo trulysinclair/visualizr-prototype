@@ -22,9 +22,10 @@ export type TableSlice = {
 
 export const createTableSlice: Slice<TableSlice> = (
   set,
-  get
+  get,
 ) => ({
-  tables: [],
+  // tables: get().nodes.filter((n) => n.type === "table").filter((n) => n.data) as ITable[],
+  tables: get(),
   addTable: (table) => {
     set((state) => ({
       tables: [...state.tables, table],

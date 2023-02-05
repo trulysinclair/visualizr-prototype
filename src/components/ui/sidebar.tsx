@@ -1,7 +1,9 @@
 import { ITable, TableNode } from "@/types/table";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
+import { log } from "console";
 import { useEffect, useState } from "react";
 import { Edge, Panel, useOnSelectionChange } from "reactflow";
+import { shallow } from "zustand/shallow";
 
 export const Sidebar = () => {
   const [selectedNode, setSelectedNode] = useState<TableNode | null>(null);
@@ -9,14 +11,16 @@ export const Sidebar = () => {
   const [selectedNodeData, setSelectedNodeData] = useState<ITable>(
     {} as ITable
   );
-  const { updateNode, getNode, nodes } = useVisualizrStore();
+  const { nodes } = useVisualizrStore((state) => ({
+    nodes: state.nodes,
+  }));
+  const { updateNode, getNode, addNotification,test } = useVisualizrStore();
 
   // When the user selects a node, update the sidebar
   useOnSelectionChange({
     onChange: ({ nodes, edges }: { nodes: TableNode[]; edges: Edge[] }) => {
       if (nodes == null) return;
       else if (nodes.length > 0) {
-        console.log(nodes, edges);
         setSelectedNode(nodes[0]);
         setSelectedNodeData(nodes[0].data);
         // setSelectedEdges(edges);
@@ -24,18 +28,32 @@ export const Sidebar = () => {
     },
   } as any);
 
+  test()
+
   // When the user updates the node data, update the node in the store
   useEffect(() => {
     if (selectedNode == null) return;
-    console.log(selectedNodeData);
+    // console.log(selectedNodeData);
     updateNode(selectedNode.id, selectedNodeData);
   }, [selectedNodeData, updateNode, selectedNode]);
 
   // when the nodes are updated, update the selected node
-  useEffect(() => {
-    if (selectedNode == null) return;
-    setSelectedNodeData(getNode<TableNode>(selectedNode.id).data);
-  }, [nodes, getNode, selectedNode]);
+  // useEffect(() => {
+  //   if (selectedNode == null) return;
+  //   else if (selectedNode.selected) {
+  //     // addNotification({
+  //     //   title: "Node updated",
+  //     //   message: `Node ${selectedNode.id} was updated`,
+  //     //   type: "info",
+  //     // })
+  //     if (selectedNodeData != getNode<TableNode>(selectedNode.id).data) {
+  //       console.log(selectedNodeData);
+  //       console.log(getNode<TableNode>(selectedNode.id).data);
+  //       console.log("nodes updated");
+  //       setSelectedNodeData(getNode<TableNode>(selectedNode.id).data);
+  //     }
+  //   }
+  // }, [selectedNode, nodes, getNode, selectedNodeData, addNotification]);
 
   return (
     <Panel

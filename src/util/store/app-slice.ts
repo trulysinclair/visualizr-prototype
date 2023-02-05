@@ -59,6 +59,10 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
   edges: [],
   reactFlowInstance: null,
   reactFlowWrapper: null as any,
+  test: () => {
+    console.log(get().nodes);
+    
+  },
   onNodesChange: (changes: NodeChange[]) => {
     set({
       nodes: applyNodeChanges(changes, get().nodes) as Node[],
