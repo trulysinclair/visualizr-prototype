@@ -1,13 +1,7 @@
 import { ITable, TableNode } from "@/types/table";
-import useAppStore from "@/util/app-store";
-import { log } from "console";
-import { useCallback, useEffect, useState } from "react";
-import {
-  Edge,
-  Panel,
-  useOnSelectionChange,
-  useUpdateNodeInternals,
-} from "reactflow";
+import useAppStore from "@/util/stores/app-store";
+import { useEffect, useState } from "react";
+import { Edge, Panel, useOnSelectionChange } from "reactflow";
 import { shallow } from "zustand/shallow";
 
 export const Sidebar = () => {
@@ -40,7 +34,7 @@ export const Sidebar = () => {
   // When the user updates the node data, update the node in the store
   useEffect(() => {
     if (selectedNode == null) return;
-    console.log(selectedNodeData)
+    console.log(selectedNodeData);
     updateNode(selectedNode.id, selectedNodeData);
   }, [selectedNodeData, updateNode, selectedNode]);
 
@@ -86,7 +80,7 @@ export const Sidebar = () => {
             </div>
             <div>
               <label htmlFor="columns">Columns</label>
-              <div className="ml-2 rounded text-black space-y-2">
+              <div className="ml-2 space-y-2 rounded text-black">
                 {selectedNodeData.columns.map((column, index) => (
                   <div key={index} className="flex space-x-2">
                     <input

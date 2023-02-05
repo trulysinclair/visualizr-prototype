@@ -1,6 +1,6 @@
 import Hover from "@/components/nodes/table/hover";
 import { IColumn, TableNode } from "@/types/table";
-import useAppStore from "@/util/app-store";
+import useAppStore from "@/util/stores/app-store";
 import {
   ExclamationCircleIcon,
   FingerPrintIcon,

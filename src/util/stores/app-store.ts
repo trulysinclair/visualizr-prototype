@@ -2,7 +2,8 @@ import { FunctionNode } from "@/types/function";
 import { ITable, TableNode } from "@/types/table";
 import { TriggerNode } from "@/types/trigger";
 import { createNode } from "@/util/create-node";
-import { Notification } from "@/util/notification-store";
+import createSelectors from "@/util/create-selectors";
+import { Notification } from "@/util/stores/notification-store";
 import refineToYaml from "@/util/refine-to-sql";
 import { dump, YAMLException } from "js-yaml";
 import { MutableRefObject, DragEvent, MouseEvent } from "react";
@@ -53,7 +54,7 @@ export type VisualizrAppState = {
   updateNode: (id: string, nodeData: Partial<ITable>) => void;
 };
 
-const useAppStore = create<VisualizrAppState>((set, get) => ({
+const appStore = create<VisualizrAppState>((set, get) => ({
   nodes: [],
   edges: [],
   reactFlowInstance: null,
@@ -254,4 +255,4 @@ const useAppStore = create<VisualizrAppState>((set, get) => ({
   },
 }));
 
-export default useAppStore;
+export default createSelectors(appStore);

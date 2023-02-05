@@ -4,7 +4,7 @@ import { AppBar } from "@/components/ui/app-bar/app-bar";
 import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
 import { Sidebar } from "@/components/ui/sidebar";
 import { Toolbar } from "@/components/ui/toolbar";
-import useAppStore, { VisualizrAppState } from "@/util/app-store";
+import useAppStore, { VisualizrAppState } from "@/util/stores/app-store";
 import {
   DragEvent,
   useCallback,

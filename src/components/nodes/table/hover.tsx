@@ -1,4 +1,4 @@
-import useAppStore from "@/util/app-store";
+import useAppStore from "@/util/stores/app-store";
 import {
   Arrow,
   Content,

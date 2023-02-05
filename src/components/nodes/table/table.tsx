@@ -1,6 +1,6 @@
 import { PSQLDataTypes } from "@/types/postgresql";
 import { ITable, TableNode } from "@/types/table";
-import useAppStore from "@/util/app-store";
+import useAppStore from "@/util/stores/app-store";
 import clsx from "clsx";
 import { log } from "console";
 import { memo, useEffect, useState } from "react";

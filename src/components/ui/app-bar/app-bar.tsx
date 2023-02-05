@@ -1,6 +1,6 @@
 "use client";
-import useAppStore, { ActionDispatcher } from "@/util/app-store";
-import useNotificationStore, { Notification } from "@/util/notification-store";
+import useAppStore, { ActionDispatcher } from "@/util/stores/app-store";
+import useNotificationStore, { Notification } from "@/util/stores/notification-store";
 import {
   IconDatabaseExport,
   IconDeviceFloppy,
