@@ -1,6 +1,7 @@
 import { PSQLDataTypes } from "@/types/postgresql";
 import { TableNode } from "@/types/table";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
+import { snakeCasePattern, spaceToUnderscore } from "@/util/string-validation";
 import { useEffect, useState } from "react";
 import { Edge, Panel, useOnSelectionChange } from "reactflow";
 import { SidebarInput } from "./input";
@@ -45,10 +46,15 @@ export const Sidebar = () => {
                       type="text"
                       name="column"
                       id="column"
+                      spellCheck="false"
+                      pattern={snakeCasePattern}
                       value={column.name}
-                      className="w-full rounded bg-secondary p-1 font-mono text-lg font-medium text-gray-400"
+                      className="w-full rounded bg-secondary p-1 font-mono text-lg font-medium text-gray-400 invalid:text-accent-red"
                       onChange={(event) => {
-                        updateColumn({ ...column, name: event.target.value });
+                        updateColumn({
+                          ...column,
+                          name: spaceToUnderscore(event.target.value),
+                        });
                       }}
                     />
                     <input

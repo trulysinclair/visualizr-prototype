@@ -55,12 +55,13 @@ export const createTableSlice: Slice<TableSlice> = (set, get) => ({
         table: produce(get().table, (draft) => {
           if (draft === null) return;
 
-          // draft.columns.push(column);
+          draft.data.columns.push(column);
         }),
       });
     }
   },
   updateColumn: (column) => {
+    
     set({
       table: produce(get().table, (draft) => {
         if (draft === null) return;
@@ -70,7 +71,7 @@ export const createTableSlice: Slice<TableSlice> = (set, get) => ({
         if (index !== -1) {
           draft.data.columns[index] = column;
         }
-        
+
         console.log(get().table?.data.columns[index]);
       }),
     });
