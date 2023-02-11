@@ -1,10 +1,20 @@
+import Hover from "@/components/nodes/table/hover";
 import { PSQLDataTypes } from "@/types/postgresql";
 import { TableNode } from "@/types/table";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import { snakeCasePattern, spaceToUnderscore } from "@/util/string-validation";
+import {
+  ExclamationCircleIcon,
+  FingerPrintIcon,
+  KeyIcon,
+} from "@heroicons/react/24/outline";
+import { IconKey, IconExclamationCircle, IconDelta } from "@tabler/icons-react";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { Edge, Panel, useOnSelectionChange } from "reactflow";
 import { SidebarInput } from "./input";
+
+const hoverIconWidth = 24;
 
 export const Sidebar = () => {
   const { onSelectionChange, table, updateNode, addColumn, updateColumn } =
@@ -138,9 +148,7 @@ export const Sidebar = () => {
                     if (!selectedNode) return;
 
                     addColumn({
-                      id: `${selectedNode.id}-${
-                        selectedNode.data.columns.length + 1
-                      }`,
+                      id: `${table.id}-${table.data.columns.length + 1}`,
                       name: "new_column",
                       type: PSQLDataTypes.TEXT,
                       isNullable: true,
