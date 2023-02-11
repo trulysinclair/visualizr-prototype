@@ -6,6 +6,13 @@ import {
   FingerPrintIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
+import {
+  IconCircleSquare,
+  IconDelta,
+  IconExclamationCircle,
+  IconExclamationMark,
+  IconKey,
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import { memo } from "react";
 import { Handle, Position } from "reactflow";
@@ -42,42 +49,6 @@ const TableColumn = (props: TableColumnProps) => {
 
   const nodeId = props.parentNodeId;
 
-  const toggleIsPrimaryKey = () => {
-    updateNode(nodeId, {
-      columns: getNode<TableNode>(nodeId).data.columns.map((column, index) => {
-        if (index === props.index) {
-          return { ...column, isPrimaryKey: !column.isPrimaryKey };
-        }
-
-        return column;
-      }),
-    });
-  };
-
-  const toggleIsNullable = () => {
-    updateNode(nodeId, {
-      columns: getNode<TableNode>(nodeId).data.columns.map((column, index) => {
-        if (index === props.index) {
-          return { ...column, isNullable: !column.isNullable };
-        }
-
-        return column;
-      }),
-    });
-  };
-
-  const toggleIsUnique = () => {
-    updateNode(nodeId, {
-      columns: getNode<TableNode>(nodeId).data.columns.map((column, index) => {
-        if (index === props.index) {
-          return { ...column, isUnique: !column.isUnique };
-        }
-
-        return column;
-      }),
-    });
-  };
-
   return column ? (
     <div className="group/column relative border-b border-primary px-2 py-1 font-mono text-sm text-gray-400 duration-100 last:border-b-0 last:border-none hover:bg-input-background/50 hover:text-gray-200">
       <Handle
@@ -89,54 +60,37 @@ const TableColumn = (props: TableColumnProps) => {
       />
 
       <div className="grid grid-cols-3">
-        <div className="">{column.name ? column.name : props.name}</div>
+        <div className="w-24 truncate">
+          {column.name ? column.name : props.name}
+        </div>
 
-        <div className="flex justify-center">
-          <Hover
-            title="PRIMARY KEY"
-            icon={
-              <KeyIcon
-                className={clsx(
-                  "opacity-70 group-hover/column:opacity-100",
-                  (column ? column.isPrimaryKey : props.isPrimaryKey)
-                    ? "text-amber-400"
-                    : "text-input-background"
-                )}
-              />
-            }
-            onClick={toggleIsPrimaryKey}
+        <div className="flex items-center justify-center">
+          <IconKey
+            height={16}
+            className={clsx(
+              "opacity-70 group-hover/column:opacity-100",
+              column.isPrimaryKey ? "text-amber-400" : "text-input-background"
+            )}
           />
-          <Hover
-            title="NOT NULL"
-            icon={
-              <ExclamationCircleIcon
-                className={clsx(
-                  "opacity-70 group-hover/column:opacity-100",
-                  (column ? column.isNullable : props.isNullable) == false
-                    ? "text-accent-red"
-                    : "text-input-background"
-                )}
-              />
-            }
-            onClick={toggleIsNullable}
+
+          <IconExclamationCircle
+            height={16}
+            className={clsx(
+              "opacity-70 group-hover/column:opacity-100",
+              column.isNullable ? "text-accent-red" : "text-input-background"
+            )}
           />
-          <Hover
-            title="UNIQUE"
-            icon={
-              <FingerPrintIcon
-                className={clsx(
-                  "opacity-70 group-hover/column:opacity-100",
-                  (column ? column.isUnique : props.isUnique)
-                    ? "text-accent-green"
-                    : "text-input-background"
-                )}
-              />
-            }
-            onClick={toggleIsUnique}
+
+          <IconDelta
+            height={16}
+            className={clsx(
+              "opacity-70 group-hover/column:opacity-100",
+              column.isUnique ? "text-accent-green" : "text-input-background"
+            )}
           />
         </div>
 
-        <div className="flex items-center justify-center px-1">
+        <div className="flex w-24 items-center justify-center">
           <span>
             {column ? column.type?.toLowerCase() : props.type.toLowerCase()}
           </span>
