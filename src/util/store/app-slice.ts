@@ -1,11 +1,11 @@
 import { FunctionNode } from "@/types/function";
+import { Slice } from "@/types/store";
 import { ITable, TableNode } from "@/types/table";
 import { TriggerNode } from "@/types/trigger";
 import { createNode } from "@/util/create-node";
 import refineToYaml from "@/util/refine-to-sql";
 import { Notification } from "@/util/store/notification-slice";
-import { Slice, Store } from "@/util/store/use-visualizr-store";
-import { dump } from "js-yaml";
+import produce from "immer";
 import { DragEvent, MouseEvent, MutableRefObject } from "react";
 import {
   addEdge,
@@ -20,9 +20,8 @@ import {
   OnEdgesChange,
   OnInit,
   OnNodesChange,
-  ReactFlowInstance,
+  ReactFlowInstance
 } from "reactflow";
-import { StateCreator } from "zustand";
 
 export type VisualizrNodes = TableNode[] | FunctionNode[] | TriggerNode[];
 
@@ -44,6 +43,13 @@ export type AppSlice = {
   setNode: (nodes: Node) => void;
   getNode: <N extends TableNode | FunctionNode | TriggerNode>(id: string) => N;
   setEdge: (edges: Edge) => void;
+  onSelectionChange: ({
+    nodes,
+    edges,
+  }: {
+    nodes: TableNode[];
+    edges: Edge[];
+  }) => void;
   setReactFlowWrapper: (
     reactFlowWrapper: MutableRefObject<HTMLDivElement | null>
   ) => void;
@@ -59,21 +65,23 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
   edges: [],
   reactFlowInstance: null,
   reactFlowWrapper: null as any,
-  test: () => {
-    console.log(get().nodes);
-    
-  },
   onNodesChange: (changes: NodeChange[]) => {
+    console.log("onNodesChange");
+
     set({
       nodes: applyNodeChanges(changes, get().nodes) as Node[],
     });
   },
   onEdgesChange: (changes: EdgeChange[]) => {
+    console.log("onEdgesChange");
+
     set({
       edges: applyEdgeChanges(changes, get().edges),
     });
   },
   onConnect: (connection: Connection) => {
+    console.log("onConnect");
+
     set({
       edges: addEdge(
         {
@@ -89,16 +97,25 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
     });
   },
   onInit: (flowInstance: ReactFlowInstance) => {
+    console.log("onInit");
+
     if (get().reactFlowInstance == null) {
       set({ reactFlowInstance: flowInstance });
     }
   },
   onDrop: (event: DragEvent<HTMLDivElement>) => {
+    console.log("onDrop");
+
     event.preventDefault();
+
+    if (get().reactFlowInstance == null) {
+      console.log("reactFlowInstance is null");
+      window.location.reload();
+      return;
+    }
 
     const reactFlowBounds =
       get().reactFlowWrapper.current?.getBoundingClientRect();
-    console.log(reactFlowBounds);
 
     const type = event.dataTransfer.getData("application/reactflow");
 
@@ -113,14 +130,12 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
     });
 
     set({
-      nodes: [...get().nodes, createNode(type as any, position!)] as (
-        | TableNode
-        | FunctionNode
-        | TriggerNode
-      )[],
+      nodes: [
+        ...get().nodes,
+        createNode(type as "table" | "function" | "trigger", position!),
+      ] as (TableNode | FunctionNode | TriggerNode)[],
     });
   },
-  // TODO: Refactor this to use a generic type
   getNode: <N extends TableNode | FunctionNode | TriggerNode>(id: string) => {
     return get().nodes.find((node) => node.id === id) as N;
   },
@@ -130,20 +145,75 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
     });
   },
   updateNode: (id: string, data: Partial<ITable>) => {
-    set({
-      nodes: get().nodes.map((node) => {
-        if (node.id == id) {
-          node.data = {
-            ...node.data,
-            ...data,
-          };
-        }
+    // if node data matches the existing node data, do nothing
+    console.log(get().getNode<TableNode>(id).data, data);
+    if (get().getNode<TableNode>(id).data === data) {
+      return;
+    } else
+      set({
+        nodes: produce(get().nodes, (draft: TableNode[]) => {
+          const node = draft.find((node) => node.id == id);
 
-        return node;
-      }) as TableNode[],
-    });
+          if (node) {
+            node.data = {
+              ...node.data,
+              ...data,
+            };
+          }
+        }),
+      });
+  },
+  onSelectionChange: ({
+    nodes,
+    edges,
+  }: {
+    nodes: (TableNode | FunctionNode | TriggerNode)[];
+    edges: Edge[];
+  }) => {
+    console.log("onSelectionChange");
+
+    if (nodes.length === 1) {
+      const node = nodes[0];
+
+      if (node.type === "table") {
+        const tableNode = get().getNode<TableNode>(node.id);
+
+        console.log(tableNode.data);
+
+        get().setTableToEdit({ id: tableNode.id, data: tableNode.data });
+      }
+
+      if (node.type === "function") {
+        const functionNode = get().getNode<FunctionNode>(node.id);
+
+        console.log(functionNode.data);
+      }
+
+      if (node.type === "trigger") {
+        const triggerNode = get().getNode<TriggerNode>(node.id);
+
+        console.log(triggerNode.data);
+      }
+    }
+
+    if (edges.length === 1) {
+      const edge = edges[0];
+
+      console.log(edge.data);
+    }
+
+    if (nodes.length === 0 && edges.length === 0) {
+      console.log("nothing selected");
+      get().setTableToEdit(null);
+    }
+
+    if (nodes.length > 1 || edges.length > 1) {
+      console.log("multiple selected");
+    }
   },
   setEdge: (edges: Edge) => {
+    console.log("setEdge");
+
     set({
       edges: [...get().edges, edges],
     });
@@ -151,11 +221,17 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
   setReactFlowWrapper: (
     reactFlowWrapper: MutableRefObject<HTMLDivElement | null>
   ) => {
-    set({
-      reactFlowWrapper: reactFlowWrapper,
-    });
+    if (get().reactFlowWrapper == null) {
+      console.log("setReactFlowWrapper");
+
+      set({
+        reactFlowWrapper: reactFlowWrapper,
+      });
+    }
   },
   onSave: (event, dispatchNotification) => {
+    console.log("onSave");
+
     event.preventDefault();
 
     const data = {
@@ -180,6 +256,8 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
     }
   },
   onLoad: (event, dispatchNotification) => {
+    console.log("onLoad");
+
     event.preventDefault();
 
     try {
@@ -208,6 +286,8 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
     }
   },
   onImport: (event, dispatchNotification) => {
+    console.log("onImport");
+
     event.preventDefault();
 
     try {
@@ -225,6 +305,8 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
     }
   },
   onExport: (event, dispatchNotification) => {
+    console.log("onExport");
+
     event.preventDefault();
 
     try {
@@ -233,14 +315,12 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
       if (appState?.nodes.length == 0)
         throw new Error("There is no data to export.");
 
-      const data = {
-        nodes: appState?.nodes,
-        edges: appState?.edges,
-      };
+      // const data = {
+      //   nodes: appState?.nodes,
+      //   edges: appState?.edges,
+      // };
 
-      const dataDump = dump(data);
-
-      console.log(dataDump);
+      // const dataDump = dump(data);
 
       refineToYaml(appState!);
 

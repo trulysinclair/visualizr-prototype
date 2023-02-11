@@ -2,7 +2,7 @@ import Relationship from "@/components/edges/relationship";
 import Table from "@/components/nodes/table/table";
 import { AppBar } from "@/components/ui/app-bar/app-bar";
 import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
-import { Sidebar } from "@/components/ui/sidebar";
+import { Sidebar } from "@/components/ui/sidebar/sidebar";
 import { Toolbar } from "@/components/ui/toolbar";
 import { AppSlice } from "@/util/store/app-slice";
 import useVisualizrStore from "@/util/store/use-visualizr-store";

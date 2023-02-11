@@ -26,86 +26,81 @@ const Table = ({ data, isConnectable, selected }: NodeProps<ITable>) => {
     getNode<TableNode>(nodeId).data.columns.concat()
   );
 
-  const insertColumn = () => {
-    const newColumn = {
-      id: `${nodeId}-${columns.length++}`,
-      name: "new_column",
-      type: PSQLDataTypes.TEXT,
-      isNullable: true,
-      isAutoIncrement: false,
-      isUnique: false,
-      isPrimaryKey: false,
-      foreignKey: null,
-      defaultValue: "",
-      description: "",
-    };
+  // const insertColumn = () => {
 
-    setColumns([
-      // remove null and undefined values from the array, not sure why they are there, but they are. This is a hacky fix.
-      ...columns.filter((item) => item != null && item != undefined),
-      newColumn,
-    ]);
-    
-  };
+  //   setColumns([
+  //     // remove null and undefined values from the array, not sure why they are there, but they are. This is a hacky fix.
+  //     ...columns.filter((item) => item != null && item != undefined),
+  //     newColumn,
+  //   ]);
+  // };
 
   // update columns in the store
   useEffect(() => {
-    updateNode(nodeId, { columns });
+    if (getNode<TableNode>(nodeId).data.columns == columns)
+      updateNode(nodeId, { columns });
   }, [columns, nodeId, updateNode, getNode]);
 
   return (
     <div
       className={clsx(
-        "group cursor-auto rounded-lg border border-gray-800 bg-secondary shadow-md duration-200 hover:border-accent-orange focus-visible:outline-none",
-        selected && "border-accent-orange"
+        "group/table cursor-auto rounded-lg border border-gray-800 shadow-md duration-200 hover:border-accent-orange focus-visible:outline-none",
+        selected ? "border-accent-orange bg-primary" : "bg-secondary"
       )}
     >
       <div
         id="drag-handle"
-        className="flex shrink cursor-grab items-center justify-center rounded-t-lg bg-primary p-2 text-center text-sm font-normal text-white"
+        className={clsx(
+          "flex shrink cursor-grab items-center justify-center rounded-t-lg  p-2 text-center text-sm font-normal text-white duration-200",
+          selected ? "bg-input-background" : "bg-primary"
+        )}
       >
-        <input
+        {/* <input
           type="text"
           value={data.title}
           onChange={(event) =>
             updateNode(nodeId, { title: event.target.value })
           }
           className="flex shrink truncate rounded bg-secondary/70 text-center text-sm font-normal text-white focus:outline-none"
-        />
+        /> */}
+        <p>
+          <span className="truncate text-sm font-medium text-white">
+            {data.title}
+          </span>
+        </p>
       </div>
 
-      {columns.length > 0 && columns
-        ? columns.map((column, index) => (
-            <TableColumn
-              id={column?.id}
-              key={v4()}
-              setColumns={setColumns}
-              parentNodeId={nodeId!}
-              type={column?.type}
-              defaultValue={column?.defaultValue}
-              description={column?.description}
-              length={column?.length}
-              index={index}
-              isNullable={column?.isNullable}
-              isAutoIncrement={column?.isAutoIncrement}
-              isUnique={column?.isUnique}
-              foreignKey={column?.foreignKey}
-              name={column?.name}
-              isPrimaryKey={column?.isPrimaryKey}
-              isConnectable={isConnectable}
-            />
-          ))
-        : null}
+      <div>
+        {data.columns.length > 0 && data.columns
+          ? data.columns.map((column, index) => (
+              <TableColumn
+                id={column?.id}
+                key={v4()}
+                setColumns={setColumns}
+                parentNodeId={nodeId!}
+                type={column?.type}
+                defaultValue={column?.defaultValue}
+                description={column?.description}
+                length={column?.length}
+                index={index}
+                isNullable={column?.isNullable}
+                isAutoIncrement={column?.isAutoIncrement}
+                isUnique={column?.isUnique}
+                foreignKey={column?.foreignKey}
+                name={column?.name}
+                isPrimaryKey={column?.isPrimaryKey}
+                isConnectable={isConnectable}
+              />
+            ))
+          : null}
+      </div>
 
       <div
-        className="flex cursor-cell justify-center border-2 border-dashed border-input-background px-2 py-1 text-sm text-gray-400 duration-75 hover:border-accent-green hover:bg-accent-green/50 hover:text-white"
-        onClick={() => {
-          insertColumn();
-        }}
-      >
-        Add Column
-      </div>
-      <div className="h-2 w-full rounded-b-lg bg-primary" />
+        className={clsx(
+          "h-2 w-full rounded-b-lg duration-200",
+          selected ? "bg-input-background" : "bg-primary"
+        )}
+      />
     </div>
   );
 };

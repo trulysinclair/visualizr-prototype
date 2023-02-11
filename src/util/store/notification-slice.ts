@@ -1,4 +1,4 @@
-import { Slice } from "@/util/store/use-visualizr-store";
+import { Slice } from "@/types/store";
 
 export type Notification = {
   title: string;

@@ -1,18 +1,20 @@
-import createSelectors from "@/util/create-selectors";
-import createAppSlice, { AppSlice } from "@/util/store/app-slice";
-import createNotificationSlice, {
-    NotificationSlice
-} from "@/util/store/notification-slice";
-import createTableSlice, { TableSlice } from "@/util/store/table-slice";
-import { create, StateCreator } from "zustand";
+import createSelectors from "@/util/store/create-selectors";
+import createAppSlice from "@/util/store/app-slice";
+import createNotificationSlice from "@/util/store/notification-slice";
+import createTableSlice from "@/util/store/table-slice";
+import { create } from "zustand";
+import { Store } from "../../types/store";
+import { logger } from "./store-logger";
 
-export type Store = NotificationSlice & AppSlice & TableSlice;
-export type Slice<T> = StateCreator<Store, [], [], T>;
+const useVisualizrStore = create<Store>(
+  logger(
+    (...all) => ({
+      ...createAppSlice(...all),
+      ...createTableSlice(...all),
+      ...createNotificationSlice(...all),
+    }),
+    "Visualizr"
+  )
+);
 
-const useVisualizrStore = create<Store>()((...all) => ({
-  ...createAppSlice(...all),
-  ...createTableSlice(...all),
-  ...createNotificationSlice(...all),
-}));
-
-export default createSelectors(useVisualizrStore)
+export default createSelectors(useVisualizrStore);
