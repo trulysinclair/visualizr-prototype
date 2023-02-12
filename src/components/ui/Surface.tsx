@@ -4,7 +4,6 @@ import { AppBar } from "@/components/ui/AppBar";
 import NotificationWrapper from "@/components/ui/notifications/NotificationWrapper";
 import { Sidebar } from "@/components/ui/Sidebar";
 import { Toolbar } from "@/components/ui/Toolbar";
-import { AppSlice } from "@/util/store/app-slice";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
   DragEvent,
@@ -12,28 +11,16 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
   Controls,
   MiniMap,
-  ReactFlowProvider,
+  ReactFlowProvider
 } from "reactflow";
 import { MarkerDefinitions } from "./markers/MarkerDefinitions";
-
-const selector = (state: AppSlice) => ({
-  nodes: state.nodes,
-  edges: state.edges,
-  reactFlowInstance: state.reactFlowInstance,
-  setReactFlowWrapper: state.setReactFlowWrapper,
-  onInit: state.onInit,
-  onDrop: state.onDrop,
-  onConnect: state.onConnect,
-  onNodesChange: state.onNodesChange,
-  onEdgesChange: state.onEdgesChange,
-});
 
 const Surface = () => {
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
@@ -51,7 +38,6 @@ const Surface = () => {
   } = useVisualizrStore();
 
   const [snapToGrid, setSnapToGrid] = useState(false);
-  // const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
 
   const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -107,7 +93,6 @@ const Surface = () => {
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             nodeTypes={nodeTypes}
-            // onError={(error) => console.log(error)}
             nodeOrigin={[0.5, 0.5]}
             edgeTypes={edgeTypes}
             defaultViewport={{ zoom: 1.5, x: 0, y: 0 }}

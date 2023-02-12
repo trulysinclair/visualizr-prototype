@@ -16,9 +16,6 @@ type MyPopoverProps = {
 };
 
 function Hover(props: MyPopoverProps) {
-  // const updateNode = useVisualizrStore();
-  // const nodeId = useNodeId()!;
-
   return (
     <HoverCard>
       <Trigger asChild>
