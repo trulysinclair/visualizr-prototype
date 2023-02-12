@@ -1,18 +1,6 @@
-import Hover from "@/components/nodes/table/hover";
 import { IColumn, TableNode } from "@/types/table";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
-import {
-  ExclamationCircleIcon,
-  FingerPrintIcon,
-  KeyIcon,
-} from "@heroicons/react/24/outline";
-import {
-  IconCircleSquare,
-  IconDelta,
-  IconExclamationCircle,
-  IconExclamationMark,
-  IconKey,
-} from "@tabler/icons-react";
+import { IconDelta, IconExclamationCircle, IconKey } from "@tabler/icons-react";
 import clsx from "clsx";
 import { memo } from "react";
 import { Handle, Position } from "reactflow";
@@ -26,7 +14,6 @@ interface TableColumnProps extends IColumn {
   isConnectable: boolean;
   parentNodeId: string;
   index: number;
-  setColumns: any;
 }
 
 // TODO: add a way to reorder columns
@@ -47,8 +34,6 @@ const TableColumn = (props: TableColumnProps) => {
     props.index
   ];
 
-  const nodeId = props.parentNodeId;
-
   return column ? (
     <div className="group/column relative border-b border-primary px-2 py-1 font-mono text-sm text-gray-400 duration-100 last:border-b-0 last:border-none hover:bg-input-background/50 hover:text-gray-200">
       <Handle
@@ -59,8 +44,8 @@ const TableColumn = (props: TableColumnProps) => {
         isConnectable={props.isConnectable}
       />
 
-      <div className="grid grid-cols-3">
-        <div className="w-24 truncate">
+      <div className="flex">
+        <div className="w-40 truncate">
           {column.name ? column.name : props.name}
         </div>
 
@@ -77,7 +62,9 @@ const TableColumn = (props: TableColumnProps) => {
             height={16}
             className={clsx(
               "opacity-70 group-hover/column:opacity-100",
-              column.isNullable ? "text-accent-red" : "text-input-background"
+              column.isNullable === false
+                ? "text-accent-red"
+                : "text-input-background"
             )}
           />
 
@@ -90,7 +77,7 @@ const TableColumn = (props: TableColumnProps) => {
           />
         </div>
 
-        <div className="flex w-24 items-center justify-center">
+        <div className="flex w-40 items-center justify-center">
           <span>
             {column ? column.type?.toLowerCase() : props.type.toLowerCase()}
           </span>

@@ -1,9 +1,9 @@
-import Relationship from "@/components/edges/relationship";
-import Table from "@/components/nodes/table/table";
-import { AppBar } from "@/components/ui/app-bar/app-bar";
-import NotificationWrapper from "@/components/ui/notifications/notification-wrapper";
-import { Sidebar } from "@/components/ui/sidebar/sidebar";
-import { Toolbar } from "@/components/ui/toolbar";
+import Relationship from "@/components/edges/Relationship";
+import Table from "@/components/nodes/Table";
+import { AppBar } from "@/components/ui/AppBar";
+import NotificationWrapper from "@/components/ui/notifications/NotificationWrapper";
+import { Sidebar } from "@/components/ui/Sidebar";
+import { Toolbar } from "@/components/ui/Toolbar";
 import { AppSlice } from "@/util/store/app-slice";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
@@ -21,7 +21,7 @@ import ReactFlow, {
     MiniMap,
     ReactFlowProvider
 } from "reactflow";
-import { MarkerDefinitions } from "./markers/marker-definitions";
+import { MarkerDefinitions } from "./markers/MarkerDefinitions";
 
 const selector = (state: AppSlice) => ({
   nodes: state.nodes,
@@ -49,7 +49,7 @@ const Surface = () => {
     onNodesChange,
     onEdgesChange,
   } = useVisualizrStore();
-  
+
   const [snapToGrid, setSnapToGrid] = useState(false);
   // const [dragImage, setDragImage] = useState<HTMLDivElement>(new Image());
 

@@ -1,8 +1,7 @@
-import { Slice, Store } from "@/types/store";
-import { State, StoreMutatorIdentifier, StateCreator } from "zustand";
+import { StateCreator, StoreMutatorIdentifier } from "zustand";
 
 type Logger = <
-  T extends State,
+  T extends unknown,
   Mps extends [StoreMutatorIdentifier, unknown][] = [],
   Mcs extends [StoreMutatorIdentifier, unknown][] = []
 >(
@@ -10,7 +9,7 @@ type Logger = <
   name?: string
 ) => StateCreator<T, Mps, Mcs>;
 
-type LoggerImpl = <T extends State>(
+type LoggerImpl = <T extends unknown>(
   f: StateCreator<T, [], []>,
   name?: string
 ) => StateCreator<T, [], []>;
@@ -19,17 +18,7 @@ const loggerImpl: LoggerImpl = (f, name) => (set, get, store) => {
   type T = ReturnType<typeof f>;
 
   const loggedSet: typeof set = (...all) => {
-    // console.log(...(name ? [`${name} Previous:`] : []), get());
-
-    // get the payload from the action
-    // @ts-ignore:disable-next-line
-    const payload: Store = all[0];
-
-    // console.log(...(name ? [`${name} Action:`] : []), ...all);
-
     set(...all);
-
-    // console.log(...(name ? [`${name} Update:`] : []), get());
   };
 
   store.setState = loggedSet;

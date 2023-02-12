@@ -6,7 +6,9 @@ export enum PSQLNumericType {
   /** variable length user-specified precision */
   DECIMAL = "DECIMAL",
   /** 8 byte floating point number */
-  DOUBLE_PRECISION = "DOUBLE PRECISION",
+  // DOUBLE_PRECISION = "DOUBLE PRECISION",
+  /** 8 byte floating point number */
+  DOUBLE = "DOUBLE",
   /** 4 byte number */
   INTEGER = "INTEGER",
   /** variable length user-specified precision */
@@ -30,9 +32,9 @@ export enum PSQLCharacterType {
   /** 1 byte character */
   CHAR = "CHAR",
   /** 1 byte character */
-  CHARACTER = "CHARACTER",
+  // CHARACTER = "CHARACTER",
   /** variable length character */
-  CHARACTER_VARYING = "CHARACTER VARYING",
+  // CHARACTER_VARYING = "CHARACTER VARYING",
   /** variable length character */
   TEXT = "TEXT",
   /** variable length character */

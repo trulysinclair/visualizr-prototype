@@ -816,6 +816,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tailwindcss/forms@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "@tailwindcss/forms@npm:0.5.3"
+  dependencies:
+    mini-svg-data-uri: ^1.2.3
+  peerDependencies:
+    tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1"
+  checksum: 9eddb4dbd06d01b1068138ff52a54ed0e35a28e7bfd3c72e226fc28658ecd92a9c078c4abe9c83db090984672040644d7ae2e035933fb619dd703df1d87aa275
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -3431,6 +3442,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mini-svg-data-uri@npm:^1.2.3":
+  version: 1.4.4
+  resolution: "mini-svg-data-uri@npm:1.4.4"
+  bin:
+    mini-svg-data-uri: cli.js
+  checksum: 997f1fbd8d59a70f03761e18626d335197a3479cb9d1ff75678e4b64b864d32a0b8fc18115eabde035e5299b8b4a354a78e57dd6ac10f9d604162a6170898d09
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -3593,6 +3613,7 @@ __metadata:
     "@radix-ui/react-toast": ^1.1.2
     "@radix-ui/react-toggle": ^1.0.1
     "@tabler/icons-react": ^2.2.0
+    "@tailwindcss/forms": ^0.5.3
     "@types/js-yaml": ^4
     "@types/lodash": ^4
     "@types/node": 18.11.18
@@ -3614,6 +3635,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     reactflow: ^11.5.1
+    tailwind-scrollbar: ^2.1.0
     tailwindcss: ^3.2.4
     typescript: 4.9.4
     uuid: ^9.0.0
@@ -4663,6 +4685,15 @@ __metadata:
     "@pkgr/utils": ^2.3.1
     tslib: ^2.4.0
   checksum: 83e054fe4494dab42114fc4ed36a11b85e18742d304ade3f40d3afb4ba4145d76183adba1f29e2c36e9a0a453b93a83e2387505f96a0efd901f562927a968c44
+  languageName: node
+  linkType: hard
+
+"tailwind-scrollbar@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tailwind-scrollbar@npm:2.1.0"
+  peerDependencies:
+    tailwindcss: 3.x
+  checksum: ef06182dc9316ccd58b446c7ca98296a53cc39a610b9eb2d641c7dd0d5b6e3366f6a126e5ca47ccb844f2665c28012a065a05f5a808e39a385d83a2f07c50da0
   languageName: node
   linkType: hard
 
