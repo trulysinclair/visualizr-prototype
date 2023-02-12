@@ -2,7 +2,7 @@ export enum PSQLNumericType {
   /** 8 byte large-range integer */
   BIGINT = "BIGINT",
   /** 8 byte auto incrementing integer */
-  BIGSERIAL = "BIGINT",
+  BIGSERIAL = "BIGSERIAL",
   /** variable length user-specified precision */
   DECIMAL = "DECIMAL",
   /** 8 byte floating point number */
