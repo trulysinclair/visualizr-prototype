@@ -7,19 +7,19 @@ import { Toolbar } from "@/components/ui/Toolbar";
 import { AppSlice } from "@/util/store/app-slice";
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import {
-    DragEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState
+  DragEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from "react";
 import ReactFlow, {
-    Background,
-    BackgroundVariant,
-    Controls,
-    MiniMap,
-    ReactFlowProvider
+  Background,
+  BackgroundVariant,
+  Controls,
+  MiniMap,
+  ReactFlowProvider,
 } from "reactflow";
 import { MarkerDefinitions } from "./markers/MarkerDefinitions";
 
