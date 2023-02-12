@@ -3,7 +3,7 @@ import { Slice } from "@/types/store";
 import { ITable, TableNode } from "@/types/table";
 import { TriggerNode } from "@/types/trigger";
 import { createNode } from "@/util/create-node";
-import refineToYaml from "@/util/refine-to-sql";
+import generateSQL from "@/util/refine-to-sql";
 import { Notification } from "@/util/store/notification-slice";
 import produce from "immer";
 import { DragEvent, MouseEvent, MutableRefObject } from "react";
@@ -20,7 +20,7 @@ import {
   OnEdgesChange,
   OnInit,
   OnNodesChange,
-  ReactFlowInstance
+  ReactFlowInstance,
 } from "reactflow";
 
 export type VisualizrNodes = TableNode[] | FunctionNode[] | TriggerNode[];
@@ -322,7 +322,13 @@ const createAppSlice: Slice<AppSlice> = (set, get) => ({
 
       // const dataDump = dump(data);
 
-      refineToYaml(appState!);
+      const generatedSQL = generateSQL(appState!);
+      const file = new Blob([generatedSQL], { type: "text/plain" });
+      const url = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "generated.sql");
+      link.click();
 
       dispatchNotification({
         title: "Exported",

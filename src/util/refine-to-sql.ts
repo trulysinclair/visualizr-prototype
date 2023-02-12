@@ -2,7 +2,7 @@ import { TableNode } from "@/types/table";
 import { dump } from "js-yaml";
 import { ReactFlowJsonObject } from "reactflow";
 
-function refineToYaml<NodeData, EdgeData>(
+function generateSQL<NodeData, EdgeData>(
   data: ReactFlowJsonObject<NodeData, EdgeData>
 ): string {
   console.log(JSON.stringify(data, null, 2));
@@ -68,9 +68,7 @@ function refineToYaml<NodeData, EdgeData>(
     sql += foreignKeyRelation;
   });
 
-  console.log(sql);
-
-  return dump(data);
+  return sql;
 }
 
-export default refineToYaml;
+export default generateSQL;
