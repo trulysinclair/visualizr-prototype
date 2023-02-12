@@ -19,8 +19,8 @@ export function createNode(
         dragHandle: "#drag-handle",
         position,
         data: {
-          title: `New Table`,
-          description: "description",
+          title: `table_${Math.random().toString(32).substring(2, 9)}`,
+          description: "A small description of the table.",
           columns: [
             {
               id: `${id}-0`,

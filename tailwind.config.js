@@ -15,8 +15,8 @@ module.exports = {
         "accent-orange": "#ed8936",
         "accent-green": "#48bb78",
         "accent-red": "#e53e3e",
-      }
+      },
     },
   },
-  plugins: [],
-}
+  plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar")],
+};

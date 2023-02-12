@@ -1,7 +1,7 @@
 import useVisualizrStore from "@/util/store/use-visualizr-store";
 import * as Toast from "@radix-ui/react-toast";
 import { ReactNode, useEffect } from "react";
-import Notification from "./notification";
+import Notification from ".";
 
 type NotificationWrapperProps = {
   children?: ReactNode;
