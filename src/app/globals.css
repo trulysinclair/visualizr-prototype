@@ -20,4 +20,11 @@
   @apply fill-accent-orange/70;
 }
 
+.react-flow__attribution {
+  @apply !top-0 !m-0 !bg-transparent !p-2 !text-base !text-white;
+}
+.react-flow__attribution a {
+  @apply !text-gray-400;
+}
+
 @tailwind utilities;
