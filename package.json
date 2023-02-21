@@ -8,7 +8,8 @@
     "start": "next start",
     "commit": "yarn stage --commit",
     "up-all": "yarn upgrade-interactive",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.8",
@@ -44,6 +45,7 @@
     "@types/prettier": "^2",
     "@types/uuid": "^9",
     "autoprefixer": "^10.4.13",
+    "cypress": "^12.5.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
     "prettier-plugin-tailwindcss": "^0.2.1",
